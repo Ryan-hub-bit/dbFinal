@@ -7,12 +7,12 @@ $_SESSION['movie_id'] = $_POST['movie_id'];
 ?>
 
 <head>
-  <title> Select movie </title>
+  <title> Movie List </title>
 </head>
 
 <body>
 
-  <h1> Select movie </h1>
+  <h1> Movie List</h1>
 
 <style type="text/css">
 #movie
@@ -72,6 +72,17 @@ if($result -> num_rows > 0) {
 } else {
     echo "0 results";
 }
+echo "<button id='back'>Back</button>";
+
+$user_id = $_SESSION['user_id'];
 $conn -> close();
 ?>
+<script type="text/javascript">
+    document.getElementById("back").onclick = function () {
+        location.href = "home.php";
+        $_SESSION['movie_id'] = '';
+        // $_SESSION['user_id'] = $user_id;  
+    };
+   
+</script>
 </body>

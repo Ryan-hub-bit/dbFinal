@@ -1,4 +1,8 @@
-
+<?php 
+echo "Your user id is: ".$_SESSION['user_id']."<br>";
+echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
+echo "Your keyword is: ".$_SESSION['keyword']."<br>";
+?>
 <!DOCTYPE html>
 <html>
 <body>
