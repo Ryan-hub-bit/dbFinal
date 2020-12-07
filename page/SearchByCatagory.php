@@ -52,7 +52,6 @@ $servername = "127.0.0.1";
 $username = "root";
 $password = "rootroot";
 
-// echo "<script type='text/javascript'>history.go(-1)</script>";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password);

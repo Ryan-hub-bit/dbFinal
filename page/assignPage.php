@@ -6,6 +6,37 @@
 <body>
 
 <h1>assignPage</h1>
+<style type="text/css">
+#movie
+  {
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  width:100%;
+  border-collapse:collapse;
+  }
+
+#movie td, #movie th 
+  {
+  font-size:1em;
+  border:1px solid #98bf21;
+  padding:3px 7px 2px 7px;
+  }
+
+#movie th 
+  {
+  font-size:1.1em;
+  text-align:left;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#A7C942;
+  color:#ffffff;
+  }
+
+#movie tr.alt td 
+  {
+  color:#000000;
+  background-color:#EAF2D3;
+  }
+</style>
 
 <?php
 $servername = "127.0.0.1";
@@ -21,9 +52,9 @@ $conn = mysqli_connect($servername, $username, $password);
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
-echo "Connected successfully";
+// echo "Connected successfully";
 
-$pagesize = 400;
+$pagesize = 10;
 $sql = "SELECT count(*) from db.mDetail";
 $rs = $conn ->query($sql);
  $myrow= mysqli_fetch_array($rs);
@@ -41,22 +72,22 @@ else{
 }
 $offset = $pagesize*($page - 1);
 // $rs = mysqli_query("SELECT  * FROM mDetail order by movie_id desc limit $offset, $pagesize");
-$sql = "SELECT * FROM db.mDetail order by movie_id desc limit $offset, $pagesize";
+$sql = "SELECT * FROM db.mDetail WHERE tagline <> '' order by movie_id asc limit $offset, $pagesize";
 $rs = $conn ->query($sql);
 if($myrow = $rs->fetch_array(MYSQLI_ASSOC))
 {
     $i=0;
     ?>
-    <table border = "0" width = "80%">
+    <table id = 'movie'>
         <tr>
-            <th width = "50%" bgcolor = "#E0E0E0">
-                <p align = "center" valign=""> movie_id
+            <th>
+                movie_id
             </th>
-            <th width = "50%" bgcolor = "#E0E0E0">
-                <p align = "center" valign=""> title
+            <th>
+              title
             </th>
-            <th width = "50%" bgcolor = "#E0E0E0">
-                <p align = "center" valign=""> tagline
+            <th>
+               tagline
             </th>
         </tr>
         <?php
@@ -64,9 +95,9 @@ if($myrow = $rs->fetch_array(MYSQLI_ASSOC))
                 $i++;
                 ?>
                 <tr>
-                    <th width = "50%"><?=$myrow["movie_id"]?></th>
-                    <th width = "50%"><?=$myrow["title"]?></th>
-                    <th width = "50%"><?=$myrow["tagline"]?></th>
+                    <th><?=$myrow["movie_id"]?></th>
+                    <th><?=$myrow["title"]?></th>
+                    <th><?=$myrow["tagline"]?></th>
                 </tr>
                 <?php
             }
@@ -74,19 +105,23 @@ if($myrow = $rs->fetch_array(MYSQLI_ASSOC))
             echo "</table>";
         }
             echo "<div> total page:".$pages." page(".$page."/".$pages.")";
+            echo "&nbsp;";
             $first=1;
             $prev = $page - 1;
             $next = $page + 1;
             $last = $pages;
             if($page > 1) {
-                echo "I am in";
                 echo "<a href ='assignPage.php?page=".$first."'>First</a>";
+                echo "&nbsp;";
                 echo "<a href ='assignPage.php?page=".$prev."'> Previous</a>";
+                echo "&nbsp";
             }
 
             if($page < $pages) {
                 echo "<a href ='assignPage.php?page=".$next."'> Next</a>";
+                echo "&nbsp;";
                 echo "<a href ='assignPage.php?page=".$last."'> Last</a>";
+                echo "&nbsp;";
 
             }
                 // for($i = 1; $i < $pages; $i++) {
