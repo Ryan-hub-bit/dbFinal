@@ -15,6 +15,5 @@ echo "Your keyword is: ".$_SESSION['keyword']."<br>";
          <input type="Submit">
 </form>
 
-
 </body>
 </html>
