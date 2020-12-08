@@ -1,11 +1,20 @@
+<?php
+include "session.php";
+session_start();
+echo "Your user id is: ".$_SESSION['user_id']."<br>";
+$_SESSION['keyword'] = $_POST['keyword'];
+echo "Your keyword is: ".$_SESSION['keyword']."<br>";
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html",charset=utf-8>
+        <title> Movie List </title>
     </head>
 <body>
 
-<h1>assignPage</h1>
+<h1>Movie List</h1>
 <style type="text/css">
 #movie
   {
@@ -50,12 +59,14 @@ $conn = mysqli_connect($servername, $username, $password);
 
 // Check connection
 if (!$conn) {
-  die("Connection failed: ". mysqli_connect_error());
+  die("Connection failed: " . mysqli_connect_error());
 }
 // echo "Connected successfully";
 
-$pagesize = 10;
-$sql = "SELECT count(*) from db.mDetail  WHERE tagline <> ''";
+$keyword = $_SESSION['keyword'];
+$pagesize = 15;
+// need to write PL/sql
+$sql = "SELECT count(*) from db.mDetail WHERE tagline <> ''";
 $rs = $conn ->query($sql);
  $myrow= mysqli_fetch_array($rs);
  $numrow = $myrow[0];
@@ -124,10 +135,8 @@ if($myrow = $rs->fetch_array(MYSQLI_ASSOC))
                 echo "&nbsp;";
 
             }
-
                     ?>
                 
         </body>
         </html>
-</body>
-</html>
+
