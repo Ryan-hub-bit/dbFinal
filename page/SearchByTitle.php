@@ -62,13 +62,13 @@ if (!$conn) {
 }
 // echo "Connected successfully";
 $keyword = $_SESSION['keyword'];
-$sql = "SELECT * FROM db.mDetail WHERE title Like '" .$keyword."'";
+$sql = "SELECT * FROM db.mDetail WHERE title Like '%" .$keyword."%'";
 // $sql = "SELECT* FROM db.mDetail";
 $result = $conn ->query($sql);
 if($result -> num_rows > 0) {
     echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th></tr>";
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>". $row["movie_id"] ." ". "<button>". " add " . "</button>". "</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";
+        echo "<tr><td>". $row["movie_id"] ."</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";
     }
     echo "</table>";
 } else {

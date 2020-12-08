@@ -46,6 +46,10 @@ $_SESSION['movie_id'] = $_POST['movie_id'];
   }
 </style>
 <?php
+      
+       
+    ?> 
+<?php
 $servername = "127.0.0.1";
 $username = "root";
 $password = "rootroot";
@@ -61,69 +65,58 @@ if (!$conn) {
 // echo "Connected successfully";
 $movie_id = $_SESSION['movie_id'];
 $user_id = $_SESSION['user_id'];
-$sql = "SELECT * FROM db.mDetail WHERE movie_id = '" .$movie_id."'";
+
+if(isset($_POST['add'])) { 
+  $movie_id = $_POST['add'];
+  // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
+  $sql1 = sprintf("INSERT INTO db.watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);",$user_id, $movie_id);
+  if($conn->query($sql1) === TRUE) {
+    echo "add".$movie_id ."successfully"; 
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+    // echo "already in your list";
+  }
+} 
+$sql = "SELECT * FROM db.mDetail WHERE movie_id = '" .$movie_id."' or movie_id = 234" ;
 // $sql = "SELECT* FROM db.mDetail";
+
 $result = $conn ->query($sql);
 if($result -> num_rows > 0) {
-    echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th></tr>";
+    echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th><th>add to your favorite</th></tr>";
     $i = 0;
     while($row = $result->fetch_assoc()) {
-         echo "<tr><td>". $row["movie_id"] ." ". "<button id='add'>". " add " . "</button>". "</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";
-        $_SESSION['watched_movie']['.$i.'] = $row["movie_id"];
-        $_SESSION['num']['.$i.'] = $i;
-        echo $_SESSION['watched_movie']['.$i.'];
-        $i++;
-        ?>
-        
-
-        <?php
-          $_SESSION['num'][$i] = $i; 
+         $tmp = $row["movie_id"];
+        //  echo "<tr><td>". $row["movie_id"] ." ". "<button id='".$i."'>". " add " . "</button>". "</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";
+         echo "<tr><td>". $row["movie_id"] ."</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td><td>";
+?>
+      
+   <form method="POST" action="SearchById.php">
+     <input value=<?php echo $tmp;?> type = "hidden" name="add">
+     <input type="submit"  value="add">
+   </form>
+<?php
+         echo "</td></tr>";      
     }
     echo "</table>";
 } else {
     echo "0 results";
 }
-echo "<button id='back'>Back</button>";
+echo "<button id='back'>Back</button><br>";
 
-if(array_key_exists('sure', $_POST)) {
-  insert();
-}
-function insert(){
-  for($i = 0; $i < 15; $i++) {
-    echo $_SESSION['watched_movie']['.$i.'];
-    if($_SESSION['watched_movie']['.$i.'] === $i) {
-      echo " " .$_SESSION['num'][$i]. "i" .$i. "<br>"; 
-      $sql = sprintf("INSERT INTO db.watchedMovies(user_id,watched_movie_id) VALUES(?, ?);",$_SESSION['num'][$i],$_SESSION['watched_movie'][$i]);
-      global $conn;
-      $conn ->query($sql);
-    }
-  }
-  echo "successfully insertion";
-}
+echo "<button id='logout'>logout</button>";
+
 $conn -> close();
 ?>
 
-<!-- <button id = "sure" onClick = "insert()">sure</button> -->
-<form method = "post">
-  <input type = "submit" name="sure" class = "button" value = "sure"/>
-</form>
-
-<p id = "test">test</p>
 
 <script type="text/javascript">
     document.getElementById("back").onclick = function () {
         location.href = "home.php";
-        $_SESSION['movie_id'] = '';
-        
-        // $_SESSION['user_id'] = $user_id;  
     };
-    for(var i = 0; i < 15; i++) {
-      document.getElementById(i).onclick = function (){
-        
-        // $_SESSION['num']['i'] = 'i';
-        document.getElementById("test").innerHTML = "successful";
+    document.getElementById("logout").onclick = function () {
+        location.href = "login.php";
     };
-    }
+    
     
 </script>
 </body>
