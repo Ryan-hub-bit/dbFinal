@@ -19,8 +19,9 @@
          <input type="Submit">
 </form>
 <h2>Searching by Title</h2>
-<form action="SearchByTitle.php" method="post">
+<form action="SearchByTitlePages.php?page=1" method="post">
     Keyword: <input type="text" name="keyword"><br>
+             <input type = "hidden" value = "false" name = "flag">
              <input type="Submit">
 </form>
 <h2> Searching by Category</h2>

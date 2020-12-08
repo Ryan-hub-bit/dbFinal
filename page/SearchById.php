@@ -83,7 +83,6 @@ $sql = "SELECT * FROM db.mDetail WHERE movie_id = '" .$movie_id."' or movie_id =
 $result = $conn ->query($sql);
 if($result -> num_rows > 0) {
     echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th><th>add to your favorite</th></tr>";
-    $i = 0;
     while($row = $result->fetch_assoc()) {
          $tmp = $row["movie_id"];
         //  echo "<tr><td>". $row["movie_id"] ." ". "<button id='".$i."'>". " add " . "</button>". "</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";

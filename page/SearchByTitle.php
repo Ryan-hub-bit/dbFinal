@@ -62,20 +62,46 @@ if (!$conn) {
 }
 // echo "Connected successfully";
 $keyword = $_SESSION['keyword'];
+if(isset($_POST['add'])) { 
+  $movie_id = $_POST['add'];
+  // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
+  $sql1 = sprintf("INSERT INTO db.watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);",$user_id, $movie_id);
+  if($conn->query($sql1) === TRUE) {
+    echo "add".$movie_id ."successfully"; 
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+    // echo "already in your list";
+  }
+} 
+if(isset($_POST['keyword'])) {
+  $keyword = $_POST['keyword'];
+}
 $sql = "SELECT * FROM db.mDetail WHERE title Like '%" .$keyword."%'";
 // $sql = "SELECT* FROM db.mDetail";
 $result = $conn ->query($sql);
 if($result -> num_rows > 0) {
-    echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th></tr>";
+    // echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th></tr>";
+    echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th><th>add to your favorite</th></tr>";
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>". $row["movie_id"] ."</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";
-    }
-    echo "</table>";
+      $tmp = $row["movie_id"];
+      echo "<tr><td>". $row["movie_id"] ."</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td><td>";
+?>
+   
+<form method="POST" action="SearchByTitle.php">
+  <input value=<?php echo $tmp;?> type = "hidden" name="add">
+  <input value=<?php echo $keyword;?> type = "hidden" name="keyword">
+  <input type="submit"  value="add">
+</form>
+<?php
+      echo "</td></tr>";      
+ }
+ echo "</table>";
 } else {
-    echo "0 results";
+ echo "0 results";
 }
-echo "<button id='back'>Back</button>";
-$user_id = $_SESSION['user_id'];
+echo "<button id='back'>Back</button><br>";
+
+echo "<button id='logout'>logout</button>";
 $conn -> close();
 ?>
 <script type="text/javascript">

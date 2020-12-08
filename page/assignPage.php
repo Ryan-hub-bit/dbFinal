@@ -21,7 +21,7 @@
   padding:3px 7px 2px 7px;
   }
 
-#movie th 
+#movie td
   {
   font-size:1.1em;
   text-align:left;
@@ -80,24 +80,24 @@ if($myrow = $rs->fetch_array(MYSQLI_ASSOC))
     ?>
     <table id = 'movie'>
         <tr>
-            <th>
+            <td>
                 movie_id
-            </th>
-            <th>
+            </td>
+            <td>
               title
-            </th>
-            <th>
+            </td>
+            <td>
                tagline
-            </th>
+            </td>
         </tr>
         <?php
             do{
                 $i++;
                 ?>
                 <tr>
-                    <th><?=$myrow["movie_id"]?></th>
-                    <th><?=$myrow["title"]?></th>
-                    <th><?=$myrow["tagline"]?></th>
+                    <td><?=$myrow["movie_id"]?></td>
+                    <td><?=$myrow["title"]?></td>
+                    <td><?=$myrow["tagline"]?></td>
                 </tr>
                 <?php
             }
