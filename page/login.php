@@ -5,15 +5,25 @@ echo "Your keyword is: ".$_SESSION['keyword']."<br>";
 ?>
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="/css/w2.css">
 <body>
 
-<h1>Login</h1>
+<div class="container">
 
-<h2>Login</h2>
-<form action="home.php" method="post">
-    user_id: <input type="text" name="user_id"><br>
-         <input type="Submit">
-</form>
+  <header>
+    <h2><a href="#">UMovies</a></h2>
+   
+  </header>
+
+  <div class="cover">
+    <h1>Discover what's out there.</h1>
+    <form  class="flex-form" action = "home.php" method = "post">
+      <input type="uid" placeholder="Your User ID">
+      <input type="submit" value="Login"> 
+    </form>
+  </div>
+
+</div>
 
 </body>
 </html>
