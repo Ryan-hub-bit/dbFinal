@@ -77,7 +77,7 @@ if(isset($_POST['add'])) {
     // echo "already in your list";
   }
 } 
-$sql = "SELECT * FROM db.mDetail WHERE movie_id = '" .$movie_id."' or movie_id = 234" ;
+$sql = "SELECT * FROM db.mDetail WHERE movie_id = '" .$movie_id."'";
 // $sql = "SELECT* FROM db.mDetail";
 
 $result = $conn ->query($sql);

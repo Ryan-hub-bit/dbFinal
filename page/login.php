@@ -17,7 +17,7 @@ echo "Your keyword is: ".$_SESSION['keyword']."<br>";
 
   <div class="cover">
     <h1>Discover what's out there.</h1>
-    <form  class="flex-form" action = "home.php" method = "post">
+    <form  class="flex-form" action = "homeCpy.php" method = "post">
       <input type="uid" placeholder="Your User ID">
       <input type="submit" value="Login"> 
     </form>
