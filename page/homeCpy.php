@@ -4,12 +4,12 @@ session_start();
 if ($_POST['user_id'] != '' || $_POST['user_id'] != null) {
     $_SESSION['user_id'] = $_POST['user_id'];
 }
-echo "Your session id is: " . $_SESSION['user_id'];
+echo "Welcome to Umovie, User " . $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if IE 8]>         <html class="no-rjs lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
 
@@ -45,19 +45,18 @@ echo "Your session id is: " . $_SESSION['user_id'];
 </body>
 <script type="text/javascript">
     document.getElementById("movieID").onclick = function() {
-
         var element = document.getElementById("d1");
+        element.removeChild(element.lastChild);
         var head = document.createElement("h1");
-        var node = document.createTextNode("Searching by Movie_ID");
+        var node = document.createTextNode("ENTER MOVIE_ID");
         head.appendChild(node);
         var div = document.createElement("div");
         div.className = "search";
-
-        element.appendChild(head);
+         div.appendChild(head);
         var f = document.createElement("form");
         f.setAttribute('id', "f1");
         f.setAttribute('method', "post");
-        f.setAttribute('action', "SearchById.php");
+        f.setAttribute('action', "SearchByIdCpy.php");
 
         var l = document.createElement("label");
         l.setAttribute('for', "search");
@@ -93,7 +92,63 @@ echo "Your session id is: " . $_SESSION['user_id'];
         div.appendChild(head);
         div.appendChild(f);
         element.appendChild(div);
+        // element.removeChild(element.lastChild);
+    };
+    document.getElementById("movieTitle").onclick = function() {
+        var element = document.getElementById("d1");
         element.removeChild(element.lastChild);
+        // element.removeChild(element.lastChild);
+        var head = document.createElement("h1");
+        var node = document.createTextNode("ENTER MOVIE_TITLE");
+        head.appendChild(node);
+        var div = document.createElement("div");
+        div.className = "search";
+         div.appendChild(head);
+        var f = document.createElement("form");
+        f.setAttribute('id', "f2");
+        f.setAttribute('method', "post");
+        f.setAttribute('action', "SearchByTitlePagesCpy.php?page=1");
+
+        var l = document.createElement("label");
+        l.setAttribute('for', "search");
+        l.setAttribute('value', "search BY mid");
+
+        var i = document.createElement("input");
+        i.setAttribute('id', "search");
+        i.setAttribute('type', "text");
+        i.setAttribute('placeholder', "Search.......");
+        i.setAttribute('autoFocus', "requrired");
+        i.setAttribute('name', "keyword")
+        
+        var flag = document.createElement("input");
+        flag.setAttribute('type',"hidden");
+        flag.setAttribute('value',"false");
+        flag.setAttribute('name', "flag");
+
+
+        var s = document.createElement("input");
+        s.setAttribute('type', "submit");
+        s.setAttribute('id', 's1');
+        s.setAttribute('name', "submit");
+        s.setAttribute('value', "Go")
+        // s.setAttribute('onclick', "searchByID");
+        // s.setAttribute('name', "Go");
+
+        // var i = document.createElement("input"); //input element, text
+        // i.setAttribute('type', "text");
+        // i.setAttribute('name', "username");
+        // i.setAttribute('placeholder',"Search")
+
+        // var s = document.createElement("input"); //input element, Submit button
+        // s.setAttribute('type', "submit");
+        // s.setAttribute('value', "Submit");
+        f.appendChild(l);
+        f.appendChild(i);
+        f.appendChild(s);
+        f.appendChild(flag);
+        div.appendChild(head);
+        div.appendChild(f);
+        element.appendChild(div);
     };
     // document.getElementById("favoriteList").onclick = function () {
     //     location.href = "test.php";

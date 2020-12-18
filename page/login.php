@@ -1,7 +1,7 @@
 <?php 
-echo "Your user id is: ".$_SESSION['user_id']."<br>";
-echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
-echo "Your keyword is: ".$_SESSION['keyword']."<br>";
+// echo "Your user id is: ".$_SESSION['user_id']."<br>";
+// echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
+// echo "Your keyword is: ".$_SESSION['keyword']."<br>";
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,7 +18,7 @@ echo "Your keyword is: ".$_SESSION['keyword']."<br>";
   <div class="cover">
     <h1>Discover what's out there.</h1>
     <form  class="flex-form" action = "homeCpy.php" method = "post">
-      <input type="uid" placeholder="Your User ID">
+      <input type="text" name= "user_id" placeholder="Your User ID">
       <input type="submit" value="Login"> 
     </form>
   </div>

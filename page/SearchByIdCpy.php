@@ -8,46 +8,13 @@ $_SESSION['movie_id'] = $_POST['movie_id'];
 
 <head>
   <title> Movie List </title>
+  <link rel="stylesheet" href="/css/SearchByTitle.css">
 </head>
 
 <body>
 
-  <h1> Movie List</h1>
 
-<style type="text/css">
-#movie
-  {
-  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-  width:100%;
-  border-collapse:collapse;
-  }
-
-#movie td, #movie th 
-  {
-  font-size:1em;
-  border:1px solid #98bf21;
-  padding:3px 7px 2px 7px;
-  }
-
-#movie th 
-  {
-  font-size:1.1em;
-  text-align:left;
-  padding-top:5px;
-  padding-bottom:4px;
-  background-color:#A7C942;
-  color:#ffffff;
-  }
-
-#movie tr.alt td 
-  {
-  color:#000000;
-  background-color:#EAF2D3;
-  }
-</style>
 <?php
-      
-       
     ?> 
 <?php
 $servername = "127.0.0.1";
@@ -82,28 +49,34 @@ $sql = "SELECT * FROM db.mDetail WHERE movie_id = '" .$movie_id."'";
 
 $result = $conn ->query($sql);
 if($result -> num_rows > 0) {
- 
-    echo "<table id = 'movie'><tr><th>movie_id</th><th>title</th><th>tagline</th><th>add to your favorite</th></tr>";
+  echo "<section>";
+  echo "<h1> Result List With MovieID = '".$movie_id. "'</h1>";
+  echo "<div class = 'tbl-header'>";
+  echo "<table cellpadding ='0' cellspacing = '0' border = '0'><thread><tr><th>movie_id</th><th>title</th><th>tagline</th><th>add to your favorite</th></tr></thread></table>";
+  echo "<div class = 'tbl-conteant'>";
+  echo "<table cellpadding ='0' cellspacing = '0' border = '0'> <tbody>";
     while($row = $result->fetch_assoc()) {
          $tmp = $row["movie_id"];
         //  echo "<tr><td>". $row["movie_id"] ." ". "<button id='".$i."'>". " add " . "</button>". "</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";
          echo "<tr><td>". $row["movie_id"] ."</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td><td>";
 ?>
       
-   <form method="POST" action="SearchById.php">
+   <form method="POST" action="SearchByIdCpy.php">
      <input value=<?php echo $tmp;?> type = "hidden" name="add">
      <input type="submit"  value="add">
    </form>
 <?php
          echo "</td></tr>";      
     }
-    echo "</table>";
+    echo "</tbody></table></div></section>";
 } else {
     echo "0 results";
 }
-echo "<button id='back'>Back</button><br>";
-
+echo "<div class = 'made-with-love'>";
+echo "<button id='back'>Back</button>";
 echo "<button id='logout'>logout</button>";
+echo "</div>";
+
 
 $conn -> close();
 ?>
@@ -116,7 +89,12 @@ $conn -> close();
     document.getElementById("logout").onclick = function () {
         location.href = "login.php";
     };
-    
+    $(window).on("load resize ", function() {
+      var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+      $('.tbl-header').css({
+        'padding-right': scrollWidth
+      });
+    }).resize();
     
 </script>
 </body>
