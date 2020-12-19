@@ -4,23 +4,47 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import warnings; warnings.simplefilter('ignore')
 import mysql.connector
-from sqlalchemy import create_engine
 
-def get_recommendations(n_rec=10):
+def get_recommendations(userID, n_rec=10):
     #Connect to Database
-    url = 'mysql://root:rootroot@127.0.0.1/db'
-    engine = create_engine(url, echo=False)
+    cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
+    cursor1 = cnx.cursor1()
+    cursor2 = cnx.cursor2()
 
+    print('Connection Successful')
+    
     #Get favorite and movies
-    qryFav = 'SELECT D.movie_id, D.tagline FROM watchedMovies AS W, mDetail AS D WHERE W.Watched_movie_id = D.movie_id AND W.user_id = 1'
+    qryFav = 'SELECT D.movie_id, D.tagline FROM watchedMovies AS W, mDetail AS D WHERE W.Watched_movie_id = D.movie_id AND W.user_id = ' + str(userID)
     qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
+    
+    cursor1.execute(qryMov)
+    cursor2.execute(qryFav)
+    mov = pd.DataFrame(data=list(cursor1), columns = cursor1.column_names)
+    fav = pd.DataFrame(data=list(cursor2), columns = cursor2.column_names)
+    
+    cursor1.close()
+    cursor2.close()
+    
+    print('Query Successful')
+    
+    #Data processing
+    mov['tagline'] = mov['tagline'].fillna('')
+    fav['tagline'] = fav['tagline'].fillna('')
     
     fav = pd.read_sql(qryFav, engine)
     mov = pd.read_sql(qryMov, engine)
     rec = recommend(n_rec, mov, fav)
     
-    #rec.to_sql(name='recommendations', con=engine, if_exists = 'replace', index=True)
+    print('Processing Successful')
+    
+    #Write to recommendations table
+    rec.to_sql(name='recommendations', con=cnx, if_exists = 'replace', index=True)
+    cnx.close()
+    
+    print('Write Successful')
+    
     return rec
+
 
 def recommend(n_rec, mov, fav):
     #similarity analysis
@@ -48,12 +72,14 @@ def recommend(n_rec, mov, fav):
 
 def test_connection():
     #Connect to Database
-    cox = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')	
+    cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')	
 
     cursor = cnx.cursor()
     cursor.execute('SELECT D.movie_id, D.tagline FROM mDetail AS D')
     mov = pd.DataFrame(data=list(cursor),columns = cursor.column_names)
     cnx.close()
+
+    print('Connection Successful') 
 
     return mov
 
