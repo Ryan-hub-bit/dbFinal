@@ -35,9 +35,8 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
                         <li id="movieCondition">ByMovieCondition</li>
                     </ul>
                 </li>
-                <li><i class="fa fa-user"></i>Favorite List</li>
+                <li id = "fList"></i>Favorite List</li>
                 <li>Recommendation</li>
-                <!-- <li>Logout</li> -->
             </ul>
         </nav>
     </div>
@@ -150,18 +149,10 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         div.appendChild(f);
         element.appendChild(div);
     };
-    // document.getElementById("favoriteList").onclick = function () {
-    //     location.href = "test.php";
-    // };
-    // document.getElementById("recommendationList").onclick = function () {
-    //     location.href = "test.php";
-    // };
-    // document.getElementById("back").onclick =function() {
-    //     location.href = "login.php";
-    // };
-    // document.getElementById("logout").onclick =function() {
-    //     location.href = "login.php";
-    // };
+    document.getElementById("fList").onclick = function(){
+            // alert("okay");
+            location.href = "favorite.php?page=1";
+    };
 </script>
 
 </html>

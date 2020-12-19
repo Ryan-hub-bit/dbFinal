@@ -86,3 +86,7 @@ $conn -> close();
     };
 </script>
 </body>
+<form action="SearchByTitlePagesCpy.php?page=<?php echo $page; ?>" method="post" onsubmit = "return sweet();">
+            <input value=<?php echo $tmp; ?> type="hidden" name="add"><br>
+            <input type="Submit" value="add">
+          </form>

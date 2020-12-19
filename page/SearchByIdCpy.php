@@ -8,7 +8,7 @@ $_SESSION['movie_id'] = $_POST['movie_id'];
 
 <head>
   <title> Movie List </title>
-  <link rel="stylesheet" href="/css/SearchByTitle.css">
+  <link rel="stylesheet" href="/css/searchByTitle.css">
 </head>
 
 <body>
