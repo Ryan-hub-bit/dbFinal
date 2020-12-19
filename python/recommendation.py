@@ -17,12 +17,12 @@ def get_recommendations(userID, n_rec=10):
     
     cursor = cnx.cursor()
     cursor.execute(qryMov)
-    mov = pd.DataFrame(data=list(cursor1), columns = cursor1.column_names)
+    mov = pd.DataFrame(data=list(cursor1), columns = cursor.column_names)
     cursor.close()
     
     cursor = cnx.cursor()
     cursor.execute(qryFav)
-    fav = pd.DataFrame(data=list(cursor2), columns = cursor2.column_names)
+    fav = pd.DataFrame(data=list(cursor2), columns = cursor.column_names)
     cursor.close()
     
     print('Query Successful')
