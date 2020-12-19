@@ -3,31 +3,20 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import warnings; warnings.simplefilter('ignore')
-
 import mysql.connector
 from sqlalchemy import create_engine
 
 def get_recommendations(n_rec=10):
     #Connect to Database
-    #url = 'mysql://username:password@host:port/database'
     url = 'mysql://root:rootroot@127.0.0.1/db'
     engine = create_engine(url, echo=False)
 
     #Get favorite and movies
-    qryFav = 'SELECT D.movie_id, D.tagline FROM watchedMovies AS W JOIN mDetail AS D ON W.Watched_movie_id = D.movie_id'
-    qryMov = ''
-
-    if False:
-        md = pd.read_csv('movies_metadata.csv')
-
-        mov = md[['original_title', 'tagline']]
-        mov['tagline'] = mov['tagline'].fillna('')
-
-        fav = md[['original_title', 'tagline']].iloc[[0,1,2]]
-        fav['tagline'] = fav['tagline'].fillna('')
+    qryFav = 'SELECT D.movie_id, D.tagline FROM watchedMovies AS W, mDetail AS D WHERE W.Watched_movie_id = D.movie_id AND W.user_id = 1'
+    qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
     
-    #fav = pd.read_sql(qryFav, engine)
-    #mov = pd.read_sql(qryMov, engine)
+    fav = pd.read_sql(qryFav, engine)
+    mov = pd.read_sql(qryMov, engine)
     rec = recommend(n_rec, mov, fav)
     
     #rec.to_sql(name='recommendations', con=engine, if_exists = 'replace', index=True)
@@ -40,11 +29,11 @@ def recommend(n_rec, mov, fav):
     sim = linear_kernel(tfidf_mov, tfidf_mov)
 
     mov = mov.reset_index()
-    ttl = mov['original_title']
-    idx = pd.Series(mov.index, index=mov['original_title'])
+    ttl = mov['movie_id']
+    idx = pd.Series(mov.index, index=mov['movie_id'])
     
     #recommendation on favorites
-    title = fav['original_title']
+    title = fav['movie_id']
     sim_scores = np.array(sim[idx[title]]) 
     avg_scores = np.average(sim_scores, axis=0)
     avg_scores = list(enumerate(avg_scores))
@@ -55,3 +44,14 @@ def recommend(n_rec, mov, fav):
     movie_rec['score'] = [i[1]*100 for i in avg_scores]
     
     return movie_rec
+
+
+def test_connection():
+    #Connect to Database
+    url = 'mysql://root:rootroot@127.0.0.1/db'
+    engine = create_engine(url, echo=False)	
+
+    qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
+    mov = pd.read_sql(qryMov, engine)
+
+    return mov
