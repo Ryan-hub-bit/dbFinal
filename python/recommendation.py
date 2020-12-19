@@ -30,9 +30,6 @@ def get_recommendations(userID, n_rec=10):
     #Data processing
     mov['tagline'] = mov['tagline'].fillna('')
     fav['tagline'] = fav['tagline'].fillna('')
-    
-    fav = pd.read_sql(qryFav, engine)
-    mov = pd.read_sql(qryMov, engine)
     rec = recommend(n_rec, mov, fav)
     
     print('Processing Successful')
