@@ -1,0 +1,38 @@
+DROP PROCEDURE SearchByCategory;
+DROP PROCEDURE SearchByTitle;
+DROP PROCEDURE SearchByKeyword;
+DROP PROCEDURE SearchByID;
+DROP PROCEDURE AddFavorite;
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByCategory(IN inputCat VARCHAR(20))
+BEGIN
+SELECT * FROM db.mDetail WHERE genre LIKE '%input%' ORDER BY title ASC;
+END; //
+
+DELIMITER //
+CREATE PROCEDURE SearchByTitle(IN input VARCHAR(20))
+BEGIN
+SELECT * FROM db.mDetail WHERE title LIKE '%input%' ORDER BY title ASC;
+END; //
+
+DELIMITER //
+CREATE PROCEDURE SearchByKeyword(IN input VARCHAR(20))
+BEGIN
+SELECT * FROM db.mDetail WHERE title LIKE '%input%' OR tagline LIKE '%input%' OR genre LIKE '%input%' ORDER BY title ASC;
+END; //
+
+DELIMITER //
+CREATE PROCEDURE SearchByID(IN input VARCHAR(20))
+BEGIN
+SELECT * FROM db.mDetail WHERE movie_ID = input;
+END; //
+
+DELIMITER //
+CREATE PROCEDURE AddFavorite(IN userID INT, IN movieID INT)
+BEGIN
+INSERT INTO db.watchedMovies(user_ID,watched_movie_id) VALUES(userID, movieID);
+END; //
+
+
