@@ -48,11 +48,12 @@ def recommend(n_rec, mov, fav):
 
 def test_connection():
     #Connect to Database
-    url = 'mysql://root:rootroot@127.0.0.1/db'
-    engine = create_engine(url, echo=False)	
+    cox = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')	
 
-    qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
-    mov = pd.read_sql(qryMov, engine)
+    cursor = cnx.cursor()
+    cursor.execute('SELECT D.movie_id, D.tagline FROM mDetail AS D')
+    mov = pd.DataFrame(data=list(cursor),columns = cursor.column_names)
+    cnx.close()
 
     return mov
 
