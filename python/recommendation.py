@@ -55,3 +55,7 @@ def test_connection():
     mov = pd.read_sql(qryMov, engine)
 
     return mov
+
+
+if __name__ == "__main__":
+    test_connection()
