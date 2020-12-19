@@ -8,17 +8,9 @@ import mysql.connector
 def get_recommendations(userID, n_rec=10):
     #Connect to Database
     cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
-    cursor1 = cnx.cursor()
-    cursor2 = cnx.cursor()
-
-    print('Connection Successful')
-    
-    #Get favorite and movies
-    qryFav = 'SELECT D.movie_id, D.tagline FROM watchedMovies AS W, mDetail AS D WHERE W.Watched_movie_id = D.movie_id AND W.user_id = ' + str(userID)
-    qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
-    
-    cursor1.execute(qryMov)
-    cursor2.execute(  cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
+    cdef get_recommendations(userID, n_rec=10):
+    #Connect to Database
+    cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
 
     print('Connection Successful')
     
