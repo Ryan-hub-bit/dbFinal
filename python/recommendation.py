@@ -8,9 +8,6 @@ import mysql.connector
 def get_recommendations(userID, n_rec=10):
     #Connect to Database
     cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
-    cdef get_recommendations(userID, n_rec=10):
-    #Connect to Database
-    cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
 
     print('Connection Successful')
     
