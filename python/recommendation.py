@@ -18,12 +18,23 @@ def get_recommendations(userID, n_rec=10):
     qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
     
     cursor1.execute(qryMov)
-    cursor2.execute(qryFav)
-    mov = pd.DataFrame(data=list(cursor1), columns = cursor1.column_names)
-    fav = pd.DataFrame(data=list(cursor2), columns = cursor2.column_names)
+    cursor2.execute(  cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
+
+    print('Connection Successful')
     
-    cursor1.close()
-    cursor2.close()
+    #Get favorite and movies
+    qryFav = 'SELECT D.movie_id, D.tagline FROM watchedMovies AS W, mDetail AS D WHERE W.Watched_movie_id = D.movie_id AND W.user_id = ' + str(userID)
+    qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
+    
+    cursor = cnx.cursor()
+    cursor.execute(qryMov)
+    mov = pd.DataFrame(data=list(cursor1), columns = cursor1.column_names)
+    cursor.close()
+    
+    cursor = cnx.cursor()
+    cursor.execute(qryFav)
+    fav = pd.DataFrame(data=list(cursor2), columns = cursor2.column_names)
+    cursor.close()
     
     print('Query Successful')
     
