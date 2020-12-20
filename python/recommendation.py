@@ -35,7 +35,12 @@ def get_recommendations(userID, n_rec=10):
     print('Processing Successful')
     
     #Write to recommendations table
-    rec.to_sql(name='recommendations', con=cnx, if_exists = 'replace', index=True)
+    cursor = cnx.cursor()
+    for movie in df.itertuples(index=False, name=None):
+        sql = 'INSERT INTO recommendation(movie_id, score) VALUES (%s, %d)''
+        val = movie
+        mycursor.execute(sql, val)
+    cnx.commit()
     cnx.close()
     
     print('Write Successful')
