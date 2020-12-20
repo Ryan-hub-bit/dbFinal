@@ -88,6 +88,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
               <th>Movie_id</th>
               <th>Title</th>
               <th>Tagline</th>
+              <th>Genres</th>
               <th>add to your favorite</th>
             </tr>
           </thead>
@@ -107,6 +108,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
                 <td><?= $myrow["movie_id"] ?></td>
                 <td><?= $myrow["title"] ?></td>
                 <td><?= $myrow["tagline"] ?></td>
+                <td><?= $myrow["genres"] ?></td>
                 <td>
                   <form id="f2" action="SearchByTitlePagesCpy.php?page=<?php echo $page; ?>" method="post" target="framename"> 
                     <input value=<?php echo $tmp; ?> type="hidden" name="add"><br>

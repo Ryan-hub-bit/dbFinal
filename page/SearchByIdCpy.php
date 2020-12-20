@@ -33,17 +33,17 @@ if (!$conn) {
 $movie_id = $_SESSION['movie_id'];
 $user_id = $_SESSION['user_id'];
 
-if(isset($_POST['add'])) { 
-  $movie_id = $_POST['add'];
-  // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
-  $sql1 = sprintf("INSERT INTO db.watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);",$user_id, $movie_id);
-  if($conn->query($sql1) === TRUE) {
-    echo "add".$movie_id ."successfully"; 
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-    // echo "already in your list";
-  }
-} 
+// if(isset($_POST['add'])) { 
+//   $movie_id = $_POST['add'];
+//   // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
+//   $sql1 = sprintf("INSERT INTO db.watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);",$user_id, $movie_id);
+//   if($conn->query($sql1) === TRUE) {
+//     echo "add".$movie_id ."successfully"; 
+//   } else {
+//     echo "Error: " . $sql . "<br>" . $conn->error;
+//     // echo "already in your list";
+//   }
+// } 
 $sql = "SELECT * FROM db.mDetail WHERE movie_id = '" .$movie_id."'";
 // $sql = "SELECT* FROM db.mDetail";
 
@@ -52,13 +52,13 @@ if($result -> num_rows > 0) {
   echo "<section>";
   echo "<h1> Result List With MovieID = '".$movie_id. "'</h1>";
   echo "<div class = 'tbl-header'>";
-  echo "<table cellpadding ='0' cellspacing = '0' border = '0'><thread><tr><th>movie_id</th><th>title</th><th>tagline</th><th>add to your favorite</th></tr></thread></table>";
+  echo "<table cellpadding ='0' cellspacing = '0' border = '0'><thread><tr><th>movie_id</th><th>title</th><th>tagline</th><th>genres</th><th>add to your favorite</th></tr></thread></table>";
   echo "<div class = 'tbl-conteant'>";
   echo "<table cellpadding ='0' cellspacing = '0' border = '0'> <tbody>";
     while($row = $result->fetch_assoc()) {
          $tmp = $row["movie_id"];
         //  echo "<tr><td>". $row["movie_id"] ." ". "<button id='".$i."'>". " add " . "</button>". "</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td></tr>";
-         echo "<tr><td>". $row["movie_id"] ."</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td><td>";
+         echo "<tr><td>". $row["movie_id"] ."</td><td>" . $row["title"]. "</td><td>" .$row["tagline"]. "</td><td>" .$row["genres"]."</td><td";
 ?>
       
    <form method="POST" action="SearchByIdCpy.php">

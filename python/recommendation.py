@@ -8,17 +8,6 @@ import mysql.connector
 def get_recommendations(userID, n_rec=10):
     #Connect to Database
     cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
-    cursor1 = cnx.cursor()
-    cursor2 = cnx.cursor()
-
-    print('Connection Successful')
-    
-    #Get favorite and movies
-    qryFav = 'SELECT D.movie_id, D.tagline FROM watchedMovies AS W, mDetail AS D WHERE W.Watched_movie_id = D.movie_id AND W.user_id = ' + str(userID)
-    qryMov = 'SELECT D.movie_id, D.tagline FROM mDetail AS D'
-    
-    cursor1.execute(qryMov)
-    cursor2.execute(  cnx = mysql.connector.connect(host='localhost',database='db',user='root',password='rootroot')
 
     print('Connection Successful')
     
@@ -28,12 +17,12 @@ def get_recommendations(userID, n_rec=10):
     
     cursor = cnx.cursor()
     cursor.execute(qryMov)
-    mov = pd.DataFrame(data=list(cursor1), columns = cursor1.column_names)
+    mov = pd.DataFrame(data=list(cursor), columns = cursor.column_names)
     cursor.close()
     
     cursor = cnx.cursor()
     cursor.execute(qryFav)
-    fav = pd.DataFrame(data=list(cursor2), columns = cursor2.column_names)
+    fav = pd.DataFrame(data=list(cursor), columns = cursor.column_names)
     cursor.close()
     
     print('Query Successful')
@@ -42,18 +31,18 @@ def get_recommendations(userID, n_rec=10):
     mov['tagline'] = mov['tagline'].fillna('')
     fav['tagline'] = fav['tagline'].fillna('')
     
-    fav = pd.read_sql(qryFav, engine)
-    mov = pd.read_sql(qryMov, engine)
+    # fav = pd.read_sql(qryFav, engine)
+    # mov = pd.read_sql(qryMov, engine)
     rec = recommend(n_rec, mov, fav)
     
     print('Processing Successful')
     
     #Write to recommendations table
-    rec.to_sql(name='recommendations', con=cnx, if_exists = 'replace', index=True)
+    # rec.to_sql(name='recommendations', con=cnx, if_exists = 'replace', index=True)
     cnx.close()
     
     print('Write Successful')
-    
+    print(rec) 
     return rec
 
 
@@ -91,7 +80,7 @@ def test_connection():
     cnx.close()
 
     print('Connection Successful') 
-    print(mov)
+
     return mov
 
 
