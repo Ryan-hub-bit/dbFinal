@@ -47,7 +47,7 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
     }
   }
 
-  $pagesize = 10;
+  $pagesize = 15;
   $sql = sprintf("SELECT count(*) FROM db.watchedMovies where user_id = %d;",$user_id);
   $rs = $conn->query($sql);
   $myrow = mysqli_fetch_array($rs);

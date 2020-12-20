@@ -101,7 +101,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
               <th>Title</th>
               <th>Tagline</th>
               <th>Genres</th>
-              <th>add to your favorite</th>
+              <th>add</th>
             </tr>
           </thead>
         </table>
