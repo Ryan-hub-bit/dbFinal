@@ -4,6 +4,26 @@ session_start();
 if ($_POST['user_id'] != '' || $_POST['user_id'] != null) {
     $_SESSION['user_id'] = $_POST['user_id'];
 }
+// if ($_POST['drop2'] != '' || $_POST['drop2'] != null) {
+//     $_SESSION['drop2'] = $_POST['drop2'];
+// }
+$_SESSION['flag'] = $_POST['flag'];
+if ($_SESSION['flag'] === 'false') {
+    $_SESSION['keyword'] = $_POST['keyword'];
+    $_SESSION['drop2'] = $_POST['drop2'];
+    $_SESSION['drop1'] = $_POST['drop1'];// genre
+    $_SESSION['adult'] = $_POST['adult'];
+    $_SESSION['runtime'] = $_POST['runtime'];
+}
+if(strcmp($_SESSION['adult'],"on") == 0) {
+    $_SESSION['adult'] = TRUE;
+}else {
+    $_SESSION['adult'] = FALSE; 
+}
+echo "flag:".$_SESSION['flag'];
+echo "checkBox:".$_SESSION['adult'];
+// echo "keyword" . $_SESSION['keyword'];
+// echo "drop2" . $_SESSION['drop2'];
 echo "Welcome to Umovie, User " . $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
@@ -23,6 +43,31 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
 </head>
 
 <body>
+    <?php
+    $user_id = $_SESSION['user_id'];
+    $keyword = $_SESSION['keyword'];
+    $gener = $_SESSION['drop1'];
+    if (isset($_POST['drop2'])) {
+        $info= $_POST['drop2'];
+        if(strcmp($info,"Economy") == 0) {
+            echo '<Script language="JavaScript">location.href="economyGeneralSearchCpy.php?page=1"</script>';
+        }else if(strcmp($info,"Detail") == 0) {
+            echo '<Script language="JavaScript">location.href="detailGeneralSearchCpy.php?page=1"</script>';
+        }else if(strcmp($info,"Rating") == 0) {
+            echo '<Script language="JavaScript">location.href="ratingGeneralSearchCpy.php?page=1"</script>';
+        }
+        // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
+        // $sql1 = sprintf("INSERT INTO db.watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);", $user_id, $movie_id);
+        // if ($conn->query($sql1) === TRUE) {
+        //     echo "<h1>Add   " . $movie_id . "    successfully</h1>";
+        // } else {
+        //     // echo "Error: " . $sql . "<br>" . $conn->error;
+        //     echo "<h1> " . $movie_id . "    Already in your favorite list</h1> ";
+        //     // echo "already in your list";
+        // }
+    }
+    $_SESSION['flag'] = true;
+    ?>
     <div id="d1" class="container">
         <nav class="menu">
             <ul class="main-menu">
@@ -35,7 +80,7 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
                         <li id="generalSearch">GeneralSearch</li>
                     </ul>
                 </li>
-                <li id = "fList"></i>Favorite List</li>
+                <li id="fList"></i>Favorite List</li>
                 <li>Recommendation</li>
             </ul>
         </nav>
@@ -43,12 +88,12 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
 
 </body>
 <!-- <button type = "button" onclick= "myFunction()"> click</button> -->
-<?php 
-    // $command = escapeshellcmd('python test.py');
-    // $command = exec('python test.py');
-    echo $output = shell_exec("python test.py");
-    // echo  "we are in";rrrr
-    echo $output;
+<?php
+// $command = escapeshellcmd('python test.py');
+// $command = exec('python test.py');
+echo $output = shell_exec("python test.py");
+// echo  "we are in";rrrr
+echo $output;
 ?>
 <script type="text/javascript">
     document.getElementById("movieID").onclick = function() {
@@ -59,7 +104,7 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         head.appendChild(node);
         var div = document.createElement("div");
         div.className = "search";
-         div.appendChild(head);
+        div.appendChild(head);
         var f = document.createElement("form");
         f.setAttribute('id', "f1");
         f.setAttribute('method', "post");
@@ -127,11 +172,11 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         i.setAttribute('placeholder', "Search.......");
         i.setAttribute('autoFocus', "requrired");
         i.setAttribute('name', "keyword")
-        
-        
+
+
         var flag = document.createElement("input");
-        flag.setAttribute('type',"hidden");
-        flag.setAttribute('value',"false");
+        flag.setAttribute('type', "hidden");
+        flag.setAttribute('value', "false");
         flag.setAttribute('name', "flag");
 
 
@@ -160,13 +205,30 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         element.appendChild(div);
     };
     document.getElementById("generalSearch").onclick = function() {
+
+
         var element = document.getElementById("d1");
         element.removeChild(element.lastChild);
-        
+
         var f = document.createElement("form");
         f.setAttribute('id', "f3");
         f.setAttribute('method', "post");
-        // f.setAttribute('action', "SearchByIdCpy.php");
+        f.setAttribute('action',"homeCpy.php");
+        // var info = document.getElementById("drop2").val();
+        // var str;
+        // if (document.getElementById('drop2') != null) {
+        //     str = document.getElementById("drop2").value;
+        // }
+        // if (str === "Economy") {
+        //     f.setAttribute('action', "");
+        // } else if (str == "Detail") {
+        //     alert("fdsfa");
+        //     f.setAttribute('action', "SearchByTitlePagesCpy.php?page=1");
+        // } else if (str === "Type") {
+        //     location.href = "favorite.php?page=1";
+        // } else if (str === "Rating") {
+        //     location.href = "favorite.php?page=1";
+        // }
 
         var head = document.createElement("h1");
         var node = document.createTextNode("GENERAL SEARCH");
@@ -176,11 +238,16 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         div1.className = "row";
         div1.appendChild(head);
 
-       
+
         var l = document.createElement("label");
         l.setAttribute('for', "keyword");
         l.setAttribute('value', "search BY mid");
         l.innerHTML = "KeyWord:";
+
+        var flag = document.createElement("input");
+        flag.setAttribute('type', "hidden");
+        flag.setAttribute('value', "false");
+        flag.setAttribute('name', "flag");
 
         var divl1 = document.createElement("div");
         divl1.className = "col-25";
@@ -199,9 +266,10 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
 
 
         var div2 = document.createElement("div");
-         div2.className = "row";
-         div2.appendChild(divl1);
-         div2.appendChild(divI1);
+        div2.className = "row";
+        div2.appendChild(divl1);
+        div2.appendChild(divI1);
+        div2.appendChild(flag);
 
         var ll = document.createElement("label");
         ll.setAttribute('for', "drop1");
@@ -210,7 +278,7 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
 
         var divl2 = document.createElement("div");
         divl2.className = "col-25";
-        divl2.appendChild(ll); 
+        divl2.appendChild(ll);
 
         var d = document.createElement("input");
         d.setAttribute('type', 'search');
@@ -218,24 +286,24 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         d.setAttribute('name', "drop1");
         d.setAttribute('id', "drop1");
 
-       
+
         var datalist = document.createElement("datalist");
-        datalist.setAttribute('id',"genres");
+        datalist.setAttribute('id', "genres");
 
         var option1 = document.createElement("option");
-        option1.setAttribute('value',"Crime")
+        option1.setAttribute('value', "Crime")
 
         var option2 = document.createElement("option");
-        option2.setAttribute('value',"Action")
+        option2.setAttribute('value', "Action")
 
         var option3 = document.createElement("option");
-        option3.setAttribute('value',"Comedy")
+        option3.setAttribute('value', "Comedy")
 
         var option4 = document.createElement("option");
-        option4.setAttribute('value',"Drama")
+        option4.setAttribute('value', "Drama")
 
         var option5 = document.createElement("option");
-        option5.setAttribute('value',"War")
+        option5.setAttribute('value', "War")
 
         datalist.appendChild(option1);
         datalist.appendChild(option2);
@@ -246,17 +314,17 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         var divI2 = document.createElement("div");
         divI2.className = "col-75";
         divI2.appendChild(d);
-        divI2.appendChild(datalist);  
+        divI2.appendChild(datalist);
 
         var div3 = document.createElement("div");
-         div3.className = "row";
-         div3.appendChild(divl2);
-         div3.appendChild(divI2);
+        div3.className = "row";
+        div3.appendChild(divl2);
+        div3.appendChild(divI2);
 
         var checkBox = document.createElement("input");
-        checkBox.setAttribute('type',"checkbox");
-        checkBox.setAttribute('id',"adult");
-        checkBox.setAttribute('name',"adult");
+        checkBox.setAttribute('type', "checkbox");
+        checkBox.setAttribute('id', "adult");
+        checkBox.setAttribute('name', "adult");
 
         var label = document.createElement("label");
         label.setAttribute('for', "adult");
@@ -264,9 +332,9 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         label.textContent = "Adult";
 
         var div4 = document.createElement("div");
-         div4.className = "row";
-         div4.appendChild(checkBox);
-         div4.appendChild(label);
+        div4.className = "row";
+        div4.appendChild(checkBox);
+        div4.appendChild(label);
 
         var l2 = document.createElement("label");
         l2.setAttribute('for', "runTime");
@@ -275,10 +343,10 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
 
         var divl3 = document.createElement("div");
         divl3.className = "col-40";
-        divl3.appendChild(l2); 
+        divl3.appendChild(l2);
 
         var runTime = document.createElement("input");
-        runTime.setAttribute('type',"text");
+        runTime.setAttribute('type', "text");
         runTime.setAttribute('id', "runtime");
         runTime.setAttribute('name', "runtime");
 
@@ -296,11 +364,10 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         // divl4.appendChild(l3);
 
         var div5 = document.createElement("div");
-         div5.className = "row";
-         div5.appendChild(divl3);
-         div5.appendChild(divI3);
+        div5.className = "row";
+        div5.appendChild(divl3);
+        div5.appendChild(divI3);
         //  div5.appendChild(divl4);
-
         var l4 = document.createElement("label");
         l4.setAttribute('for', "runTime");
         l4.setAttribute('value', "runTime");
@@ -321,16 +388,16 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         var option6 = document.createElement("option");
         option6.setAttribute('value',"Detail")
 
-        var option7 = document.createElement("option");
-        option7.setAttribute('value',"Type")
+        // var option7 = document.createElement("option");
+        // option7.setAttribute('value',"Type")
 
         var option8 = document.createElement("option");
-        option8.setAttribute('value',"rating")
+        option8.setAttribute('value',"Rating")
 
 
         datalist2.appendChild(option5);
         datalist2.appendChild(option6);
-        datalist2.appendChild(option7);
+        // datalist2.appendChild(option7);
         datalist2.appendChild(option8);
 
         var div6 = document.createElement("div");
@@ -340,15 +407,17 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
          div6.appendChild(datalist2);        
            
 
+
+
         var s = document.createElement("input");
         s.setAttribute('type', "submit");
         // s.setAttribute('id', 's1');
         s.setAttribute('name', "submit");
-        s.setAttribute('value', "Go")
+        s.setAttribute('value', "Go");
 
         var div7 = document.createElement("div");
-         div7.className = "row";
-         div7.appendChild(s);
+        div7.className = "row";
+        div7.appendChild(s);
         // s.setAttribute('onclick', "searchByID");
         // s.setAttribute('name', "Go");
 
@@ -360,23 +429,28 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
         // var s = document.createElement("input"); //input element, Submit button
         // s.setAttribute('type', "submit");
         // s.setAttribute('value', "Submit");
-        var div =document.createElement("div")
+        var div = document.createElement("div")
         div.className = "search"
-
+        div.appendChild(div6);
         div.appendChild(div1);
         div.appendChild(div2);
         div.appendChild(div3);
         div.appendChild(div4);
         div.appendChild(div5);
-        div.appendChild(div6);
-        div.appendChild(div7);        // f.appendChild(checkBox);
+
+        div.appendChild(div7); // f.appendChild(checkBox);
         f.appendChild(div);
+        // var divTotal = document.createElement("div");
+        // divTotal.className = "search";
+        // divTotal.append(div5);
+        // divTotal.append(div6);
+        // divTotal.appendChild(f);
         element.appendChild(f);
         // element.removeChild(element.lastChild);
     };
-    document.getElementById("fList").onclick = function(){
-            // alert("okay");
-            location.href = "favorite.php?page=1";
+    document.getElementById("fList").onclick = function() {
+        // alert("okay");
+        location.href = "favorite.php?page=1";
     };
 </script>
 

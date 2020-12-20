@@ -6,7 +6,16 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
 //  echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
 $_SESSION['flag'] = $_POST['flag'];
 if ($_SESSION['flag'] === 'false') {
-  $_SESSION['keyword'] = $_POST['keyword'];
+    $_SESSION['keyword'] = $_POST['keyword'];
+    $_SESSION['drop2'] = $_POST['drop2'];
+    $_SESSION['drop1'] = $_POST['drop1'];// genre
+    $_SESSION['adult'] = $_POST['adult'];
+    $_SESSION['runtime'] = $_POST['runtime'];
+}
+if(strcmp($_SESSION['adult'],"on") == 0) {
+    $_SESSION['adult'] = true;
+}else {
+    $_SESSION['adult'] = false; 
 }
 
 echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
@@ -41,6 +50,9 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
   // echo "Connected successfully";
   $user_id = $_SESSION['user_id'];
   $keyword = $_SESSION['keyword'];
+  $genre = $_SESSION['drop1'];
+  $adult = $_SESSION['adult'];
+  $runtime = $_SESSION['runtime'];
   if (isset($_POST['add'])) {
     $movie_id = $_POST['add'];
 
@@ -80,7 +92,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
     $i = 0;
   ?>
     <section>
-      <h1>MOVIE LIST WITH KEY = '<?php echo $keyword ?>'</h1>
+      <h1>MOVIE LIST WITH KEY = '<?php echo $keyword ?>' (ECONOMY INFO)</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
           <thead>
@@ -89,7 +101,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
               <th>Title</th>
               <th>Tagline</th>
               <th>Genres</th>
-              <th>add</th>
+              <th>add to your favorite</th>
             </tr>
           </thead>
         </table>
@@ -110,7 +122,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
                 <td><?= $myrow["tagline"] ?></td>
                 <td><?= $myrow["genres"] ?></td>
                 <td>
-                  <form id="f2" action="SearchByTitlePagesCpy.php?page=<?php echo $page; ?>" method="post" target="framename"> 
+                  <form id="f2" action="economyGeneralSearchCpy.php?page=<?php echo $page; ?>" method="post" target="framename"> 
                     <input value=<?php echo $tmp; ?> type="hidden" name="add"><br>
                     <input type="Submit" value="add">
                     
@@ -134,16 +146,16 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
           $next = $page + 1;
           $last = $pages;
           if ($page > 1) {
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $first . "'>First</a>";
+            echo "<a href ='economyGeneralSearchCpy.php?page=" . $first . "'>First</a>";
             echo "&nbsp;";
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $prev . "'> Previous</a>";
+            echo "<a href ='economyGeneralSearchCpy.php?page=" . $prev . "'> Previous</a>";
             echo "&nbsp";
           }
 
           if ($page < $pages) {
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $next . "'> Next</a>";
+            echo "<a href ='economyGeneralSearchCpy.php?page=" . $next . "'> Next</a>";
             echo "&nbsp;";
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $last . "'> Last</a>";
+            echo "<a href ='economyGeneralSearchCpy.php?page=" . $last . "'> Last</a>";
             echo "&nbsp;";
           }
           echo "<button id='back'>Back</button><br>";

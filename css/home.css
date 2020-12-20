@@ -268,7 +268,7 @@ form {
     width: 100%;
     background: var(--color-light);
     /* padding: 0 1.6rem; */
-    padding: 12px;
+    /* padding: 12px; */
     border-radius: var(--rad);
     appearance: none;
     transition: all var(--dur) var(--bez);
@@ -324,7 +324,7 @@ form {
   }
 
  input[type=submit] {
-    background-color: #4CAF50;
+    background-color: #15dd15;
     width:50%;
     color: white;
     font-size:28px;

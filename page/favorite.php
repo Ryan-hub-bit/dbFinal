@@ -4,12 +4,12 @@ session_start();
 echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
 // $_SESSION['movie_id'] = $_POST['movie_id'];
 //  echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
-$_SESSION['flag'] = $_POST['flag'];
-if ($_SESSION['flag'] === 'false') {
-  $_SESSION['keyword'] = $_POST['keyword'];
-}
+// $_SESSION['flag'] = $_POST['flag'];
+// if ($_SESSION['flag'] === 'false') {
+//   $_SESSION['keyword'] = $_POST['keyword'];
+// }
 
-echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
+// echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
 ?>
 
 <head>
@@ -79,7 +79,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
             <th>Movie_id</th>
             <th>Title</th>
             <th>Tagline</th>
-            <th>Delete from your favorite</th>
+            <th>Delete</th>
           </tr>
         </thead>
       </table>
@@ -101,7 +101,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
         <td>
           <form action="favorite.php?page=<?php echo $page; ?>" method="post" onsubmit= "setTimeout(function () { window.location.reload(); }, 10)">
             <input value=<?php echo $tmp;?> type="hidden" name="delete"><br>
-            <input type="Submit" value="delete">
+            <input id="delete" type="Submit" value="delete">
           </form>
       
         </td>

@@ -52,7 +52,7 @@ if($result -> num_rows > 0) {
   echo "<section>";
   echo "<h1> Result List With MovieID = '".$movie_id. "'</h1>";
   echo "<div class = 'tbl-header'>";
-  echo "<table cellpadding ='0' cellspacing = '0' border = '0'><thread><tr><th>movie_id</th><th>title</th><th>tagline</th><th>genres</th><th>add to your favorite</th></tr></thread></table>";
+  echo "<table cellpadding ='0' cellspacing = '0' border = '0'><thread><tr><th>movie_id</th><th>title</th><th>tagline</th><th>genres</th><th>add </th></tr></thread></table>";
   echo "<div class = 'tbl-conteant'>";
   echo "<table cellpadding ='0' cellspacing = '0' border = '0'> <tbody>";
     while($row = $result->fetch_assoc()) {
