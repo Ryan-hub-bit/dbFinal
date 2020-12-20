@@ -6,7 +6,16 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
 //  echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
 $_SESSION['flag'] = $_POST['flag'];
 if ($_SESSION['flag'] === 'false') {
-  $_SESSION['keyword'] = $_POST['keyword'];
+    $_SESSION['keyword'] = $_POST['keyword'];
+    $_SESSION['drop2'] = $_POST['drop2'];
+    $_SESSION['drop1'] = $_POST['drop1'];// genre
+    $_SESSION['adult'] = $_POST['adult'];
+    $_SESSION['runtime'] = $_POST['runtime'];
+}
+if(strcmp($_SESSION['adult'],"on") == 0) {
+    $_SESSION['adult'] = true;
+}else {
+    $_SESSION['adult'] = false; 
 }
 
 echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
@@ -29,24 +38,26 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
   $servername = "127.0.0.1";
   $username = "root";
   $password = "rootroot";
-  $db = "db";
+
 
   // Create connection
-  $conn = mysqli_connect($servername, $username, $password,$db);
+  $conn = mysqli_connect($servername, $username, $password);
 
   // Check connection
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
-
   // echo "Connected successfully";
   $user_id = $_SESSION['user_id'];
   $keyword = $_SESSION['keyword'];
+  $genre = $_SESSION['drop1'];
+  $adult = $_SESSION['adult'];
+  $runtime = $_SESSION['runtime'];
   if (isset($_POST['add'])) {
     $movie_id = $_POST['add'];
 
     // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
-    $sql1 = sprintf("INSERT INTO watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);", $user_id, $movie_id);
+    $sql1 = sprintf("INSERT INTO db.watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);", $user_id, $movie_id);
     if ($conn->query($sql1) === TRUE) {
       echo "<h1>Add   " . $movie_id . "    successfully</h1>";
     } else {
@@ -57,7 +68,7 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
   }
 
   $pagesize = 15;
-  $sql = "SELECT count(*) FROM mDetail WHERE title Like '%" . $keyword . "%' AND tagline <> ''";
+  $sql = "SELECT count(*) FROM db.mDetail WHERE title Like '%" . $keyword . "%' AND tagline <> ''";
   $rs = $conn->query($sql);
   $myrow = mysqli_fetch_array($rs);
   $numrow = $myrow[0];
@@ -73,26 +84,24 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
   }
   $offset = $pagesize * ($page - 1);
 
-  // $sql = sprintf("SELECT * FROM db.mDetail WHERE title Like '%%%s%%' order by movie_id desc limit %d offset %d;", $keyword, $pagesize, $offset);
+  $sql = sprintf("SELECT * FROM db.mDetail WHERE title Like '%%%s%%' order by movie_id desc limit %d offset %d;", $keyword, $pagesize, $offset);
   // $sql = "SELECT * FROM db.mDetail WHERE title Like '%" . $keyword . "%'";
-
   // $sql = "SELECT* FROM db.mDetail";
-  
-  $rs = $conn->query("CALL SearchByTitle('".$keyword."',$pagesize,'".$offset."')");
+  $rs = $conn->query($sql);
   if ($myrow = $rs->fetch_array(MYSQLI_ASSOC)) {
     $i = 0;
   ?>
     <section>
-      <h1>MOVIE LIST WITH KEY = '<?php echo $keyword ?>'</h1>
+      <h1>MOVIE LIST WITH KEY = '<?php echo $keyword ?>'(RATING INFO)</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
           <thead>
             <tr>
-              <th>Movie id</th>
+              <th>Movie_id</th>
               <th>Title</th>
               <th>Tagline</th>
               <th>Genres</th>
-              <th>add to favorite</th>
+              <th>add to your favorite</th>
             </tr>
           </thead>
         </table>
@@ -111,9 +120,9 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
                 <td><?= $myrow["movie_id"] ?></td>
                 <td><?= $myrow["title"] ?></td>
                 <td><?= $myrow["tagline"] ?></td>
-                <td><?= $myrow["genre"] ?></td>
+                <td><?= $myrow["genres"] ?></td>
                 <td>
-                  <form id="f2" action="SearchByTitlePagesCpy.php?page=<?php echo $page; ?>" method="post" target="framename"> 
+                  <form id="f2" action="detailGeneralSearchCpy.php?page=<?php echo $page; ?>" method="post" target="framename"> 
                     <input value=<?php echo $tmp; ?> type="hidden" name="add"><br>
                     <input type="Submit" value="add">
                     
@@ -137,16 +146,16 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
           $next = $page + 1;
           $last = $pages;
           if ($page > 1) {
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $first . "'>First</a>";
+            echo "<a href ='detailGeneralSearchCpy.php?page=" . $first . "'>First</a>";
             echo "&nbsp;";
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $prev . "'> Previous</a>";
+            echo "<a href ='detailGeneralSearchCpy.php?page=" . $prev . "'> Previous</a>";
             echo "&nbsp";
           }
 
           if ($page < $pages) {
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $next . "'> Next</a>";
+            echo "<a href ='detailGeneralSearchCpy.php?page=" . $next . "'> Next</a>";
             echo "&nbsp;";
-            echo "<a href ='SearchByTitlePagesCpy.php?page=" . $last . "'> Last</a>";
+            echo "<a href ='detailGeneralSearchCpy.php?page=" . $last . "'> Last</a>";
             echo "&nbsp;";
           }
           echo "<button id='back'>Back</button><br>";

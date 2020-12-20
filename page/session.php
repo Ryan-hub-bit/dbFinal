@@ -4,4 +4,7 @@ $_SESSION['user_id'];
 $_SESSION['movie_id'];
 $_SESSION['keyword'];
 $_SESSION['flag'];
+$_SESSION['drop1'];
+$_SESSION['adult'];
+$_SESSION['runtime'];
 ?>

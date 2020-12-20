@@ -4,12 +4,12 @@ session_start();
 echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
 // $_SESSION['movie_id'] = $_POST['movie_id'];
 //  echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
-$_SESSION['flag'] = $_POST['flag'];
-if ($_SESSION['flag'] === 'false') {
-  $_SESSION['keyword'] = $_POST['keyword'];
-}
+// $_SESSION['flag'] = $_POST['flag'];
+// if ($_SESSION['flag'] === 'false') {
+//   $_SESSION['keyword'] = $_POST['keyword'];
+// }
 
-echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
+// echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
 ?>
 
 <head>
