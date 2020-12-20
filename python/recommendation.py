@@ -39,7 +39,7 @@ def get_recommendations(userID, n_rec=10):
     for movie in rec.itertuples(index=False, name=None):
         sql = 'INSERT INTO recommendation(movie_id, score) VALUES (%s, %d)'
         val = movie
-        mycursor.execute(sql, val)
+        cursor.execute(sql, val)
     cnx.commit()
     cnx.close()
     
