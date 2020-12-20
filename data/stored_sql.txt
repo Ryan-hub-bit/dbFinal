@@ -22,12 +22,17 @@ END; //
 DELIMITER //
 CREATE PROCEDURE SearchByGeneral(IN keyword VARCHAR(50), IN adlt VARCHAR(5), IN runtime INT, IN return INT)
 BEGIN
-WITH Filter AS (SELECT * FROM db.mDetail AS D, db.mType AS T WHERE D.movie_id = T.movie_id AND (D.title LIKE '%keyword%' OR D.tagline LIKE '%keyword%' OR D.genre LIKE '%keyword%') AND T.adult = adult AND T.runtime <= runtime)
+CREATE VIEW Filter AS (SELECT * FROM db.mDetail AS D, db.mType AS T WHERE D.movie_id = T.movie_id AND (D.title LIKE '%keyword%' OR D.tagline LIKE '%keyword%' OR D.genre LIKE '%keyword%') AND T.adult = adult AND T.runtime <= runtime)
+
+SELECT COUNT(*) FROM Filter
 
 CASE
 WHEN return = 1 THEN (SELECT title, genre, tagline FROM Filter)
 WHEN return = 2 THEN (SELECT F.title, E.budget, E.revenue FROM Filter AS F, db.mEcoBen AS E WHERE F.movie_id = E.movie_id)
 WHEN return = 3 THEN (SELECT F.title, R.popularity, R.vote_average FROM  Filter AS F, db.mRating AS R WHERE F.movie_id = R.movie_id)
+
+DROP VIEW Filter
+
 END; //
 
 
