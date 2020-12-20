@@ -30,31 +30,21 @@ def get_recommendations(userID, n_rec=10):
     #Data processing
     mov['tagline'] = mov['tagline'].fillna('')
     fav['tagline'] = fav['tagline'].fillna('')
-<<<<<<< HEAD
-    
-    # fav = pd.read_sql(qryFav, engine)
-    # mov = pd.read_sql(qryMov, engine)
-=======
->>>>>>> 22d5af9e059740ced2a3b65f36fd6cefa0e34e24
     rec = recommend(n_rec, mov, fav)
     
     print('Processing Successful')
     
     #Write to recommendations table
-<<<<<<< HEAD
-    # rec.to_sql(name='recommendations', con=cnx, if_exists = 'replace', index=True)
-=======
     cursor = cnx.cursor()
     for movie in df.itertuples(index=False, name=None):
         sql = 'INSERT INTO recommendation(movie_id, score) VALUES (%s, %d)''
         val = movie
         mycursor.execute(sql, val)
     cnx.commit()
->>>>>>> 22d5af9e059740ced2a3b65f36fd6cefa0e34e24
     cnx.close()
     
     print('Write Successful')
-    print(rec) 
+    
     return rec
 
 
