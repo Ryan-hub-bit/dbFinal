@@ -6,7 +6,7 @@ Contributor: Kun Liu, William Xu
 
 ​	Our application domain is a searchable movie database with a user watch history and a recommendation system. The recommendation system will based on watch history using natural language processing. Users will be able to search and add movies to their watched history list, and then have our database with python backend output recommendations based on user watch history. 
 
-​	A video demo of our database running can be found at TODO. Screenshots of the results are also included in Section 11. Instructions on how to import and run our project code is included in Section 6. This project is quite finicky as it has various connections between Python packages, PHP, CSS, MySQL, and MacOS specific system paths. We strongly advise the user to use their best judgement to solve any issues that may arise during import. 
+​	A video demo of our database running can be found at [Youtube Link](https://youtu.be/hagdfeBO2c0). Screenshots of the results are also included in Section 11. Instructions on how to import and run our project code is included in Section 6. This project is quite finicky as it has various connections between Python packages, PHP, CSS, MySQL, and MacOS specific system paths. We strongly advise the user to use their best judgement to solve any issues that may arise during import. 
 
 
 
