@@ -1,6 +1,6 @@
 # Yarowsky's Movie
 
-Contributor: Kun Liu, William Xu
+Contributors: Kun Liu, William Xu
 
 ### Overview
 
