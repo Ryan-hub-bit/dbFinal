@@ -2,7 +2,7 @@
 
 Contributor: Kun Liu, William Xu
 
-### Overviews
+### Overview
 
 ​	Our application domain is a searchable movie database with a user watch history and a recommendation system. The recommendation system will based on watch history using natural language processing. Users will be able to search and add movies to their watched history list, and then have our database with python backend output recommendations based on user watch history. 
 
