@@ -65,7 +65,7 @@ NOTE: Due to the extremely finicky nature of the interaction of Python virtual e
 
   o User can add to, and delete from their watched list.
 
-  o  User watched list is saved across sessions, so they can log back on and add to their list at a later date using their user_id.
+  o User watched list is saved across sessions, so they can log back on and add to their list at a later date using their user_id.
 
 - Our database provides allows users the options to select what information they want to see about the movies they are searching up. 
 
