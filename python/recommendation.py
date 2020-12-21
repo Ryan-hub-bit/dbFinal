@@ -87,4 +87,4 @@ def test_connection():
 
 
 if __name__ == "__main__":
-    get_recommendations(29)
+    get_recommendations(3)

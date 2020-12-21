@@ -1,20 +1,12 @@
 <?php
 include "session.php";
 session_start();
-echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
-// $_SESSION['movie_id'] = $_POST['movie_id'];
-//  echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
-// $_SESSION['flag'] = $_POST['flag'];
-// if ($_SESSION['flag'] === 'false') {
-//   $_SESSION['keyword'] = $_POST['keyword'];
-// }
-
-// echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
 ?>
 
 <head>
   <link rel="stylesheet" href="/css/SearchByTitle.css">
-  <title> Movie List </title>
+  <script type="text/javascript" src="../js/favorite.js"></script>
+  <title> Favorite List </title>
 </head>
 
 <body>
@@ -43,7 +35,7 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
       echo "" . $movie_id . "successfully";
     } else {
       echo "Error: " . $sql . "<br>" . $conn->error;
-      // echo "already in your list";
+
     }
   }
 
@@ -66,7 +58,7 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
 
   $sql = sprintf("SELECT mDetail.movie_id, mDetail.title, mDetail.tagline FROM watchedMovies,mDetail WHERE db.mDetail.movie_id = db.watchedMovies.watched_movie_id AND db.watchedMovies.user_id =%d order by db.watchedMovies.watched_movie_id desc limit %d offset %d;",$user_id,$pagesize, $offset);
   $rs = $conn->query($sql) or die("Error: ".mysqli_error($conn));
-  // $rs = $conn->query($sql);
+
   if ($myrow = $rs->fetch_array(MYSQLI_ASSOC)) {
     $i = 0;
   ?>

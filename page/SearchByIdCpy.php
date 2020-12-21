@@ -82,6 +82,7 @@ $_SESSION['movie_id'] = $_POST['movie_id'];
   ?>
 
 
+
   <script type="text/javascript">
     document.getElementById("back").onclick = function() {
       location.href = "homeCpy.php";

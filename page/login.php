@@ -1,11 +1,8 @@
-<?php 
-// echo "Your user id is: ".$_SESSION['user_id']."<br>";
-// echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
-// echo "Your keyword is: ".$_SESSION['keyword']."<br>";
-?>
+
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="/css/w2.css">
+    <title>login</title>
+    <link rel="stylesheet" href="/css/login.css">
 <body>
 
 <div class="container">

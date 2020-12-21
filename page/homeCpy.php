@@ -40,6 +40,7 @@ echo "Welcome to Yarowsky's Movies, User " . $_SESSION['user_id'];
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/home.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/createSearch.js"></script>
 </head>
 
 <body>
