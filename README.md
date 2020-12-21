@@ -17,6 +17,7 @@ Contributor: Kun Liu, William Xu
 NOTE: Due to the extremely finicky nature of the interaction of Python virtual environments, package dependencies, and version compatibility with MySQL and PHP, the user is advised to use their best judgement in running the database and troubleshooting (it took us forever to get it working)
 
 ### System/package requirements
+
 - Python:  3.7/3.8
 - OS: MacOS (created on MacOS, other platforms not tested)
 - Dependencies:  pandas, numpy, scikit-learn, mysql-connector-python
@@ -31,18 +32,18 @@ NOTE: Due to the extremely finicky nature of the interaction of Python virtual e
   -  Make sure you have a Python package management system such as conda (anaconda is recommended) downloaded and setup
   - Create a virtual environment in Python 3.7 or 3.8.
   - Install pandas, numpy, scikit-learn and mysql-connector-python in that virtual environment
-    - i.   All dependencies of the above packages must also be installed. The Python package management system should take care of this and any conflicts. 
-    -  ii.   Conda might not be able to install mysql-connector-python correctly. In that case, use pip to install it.
+    -  All dependencies of the above packages must also be installed. The Python package management system should take care of this and any conflicts. 
+    - Conda might not be able to install mysql-connector-python correctly. In that case, use pip to install it.
   -  Activate the virtual environment.
     -   Make sure the environment is up and running and all necessary files are in the file path. You may also have to add something to the .bash file. Please use your best judgement to trouble shoot.
     -   Trouble shooting tips:
       - Consult stack overflow
       -  Restart your computer
-      -   Cry
+      -   **Cry**
       - Download and setup MySQL 8.0
-      -   It is important that it is MySQL 8.0 as support for previous versions of MySQL is not guaranteed in the above installed python packages.   
+      - It is important that it is MySQL 8.0 as support for previous versions of MySQL is not guaranteed in the above installed python packages.   
   - Create and load the database with values. Load the data provided in the .zip file into the database. 
-    -   The tables are split into separate .csv files in /data.
+    - The tables are split into separate .csv files in /data.
     - Table schemas can be found below in Section 12. 
     -  We used MySQL Workbench to help create the tables and import the data using flat file import. 
     -  Establish connection between the recommendation.py file and the database.
@@ -66,11 +67,11 @@ NOTE: Due to the extremely finicky nature of the interaction of Python virtual e
 
   o  User watched list is saved across sessions, so they can log back on and add to their list at a later date using their user_id.
 
--  Our database provides allows users the options to select what information they want to see about the movies they are searching up. 
+- Our database provides allows users the options to select what information they want to see about the movies they are searching up. 
 
   o  Users can select to see movie economic data (budget, revenue), movie ratings (popularity, user ratings),  or movie details (tagline, genre).
 
--  The GUI of our database – although far from perfect – holds a few subtle refinements. 
+- The GUI of our database – although far from perfect – holds a few subtle refinements. 
 
   o  Movies results are returned in a manageable 15 entries per page, with the option of going onto the next page if you want more results, and the option of going back to the previous page.
 
