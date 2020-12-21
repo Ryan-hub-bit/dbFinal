@@ -27,7 +27,7 @@ html {
 body {
   font-family: 'Lato', sans-serif;
   margin: 0;
-  background: url('https://source.unsplash.com/G8rRItjrwkA') no-repeat center center fixed;
+  background: url('../images/background.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -54,7 +54,7 @@ a:hover {
 h1 {
   font-size: 3rem;
   font-weight: 700;
-  color: #fff;
+  color: rgb(185, 183, 183);
   margin: 0 0 1.5rem;
 }
 

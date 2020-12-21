@@ -14,14 +14,14 @@ h1{
     background-color: rgba(255,255,255,0.3);
    }
   .tbl-content{
-    height:700px;
+    height:1000px;
     overflow-x:auto;
     margin-top: 0px;
     border: 1px solid rgba(255,255,255,0.3);
   }
   th{
     padding: 20px 15px;
-    text-align: left;
+    text-align: center;
     font-weight: 200;
     font-size: 30px;
     color: #fff;
@@ -29,7 +29,7 @@ h1{
   }
   td{
     padding: 15px;
-    text-align: left;
+    text-align: center;
     vertical-align:middle;
     font-weight: 200;
     font-size: 30px;
@@ -60,7 +60,7 @@ h1{
     padding: 10px;
     clear: left;
     text-align: center;
-    font-size: 10px;
+    font-size: 30px;
     font-family: arial;
     color: #fff;
   }
@@ -117,3 +117,19 @@ h1{
     margin-left: 25%;
     display:inline-block; 
   }
+  .button {
+    background-color: #171a17;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+
+  
+ 

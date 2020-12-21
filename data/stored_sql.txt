@@ -1,3 +1,4 @@
+
 DROP PROCEDURE SearchByTitle;
 DROP PROCEDURE SearchByID;
 DROP PROCEDURE SearchByKeyword;
@@ -21,9 +22,9 @@ END; //
 
 
 DELIMITER //
-CREATE PROCEDURE SearchByGeneral(IN keyword VARCHAR(50), IN adlt VARCHAR(5), IN runtime INT, IN return INT, IN pagesize INT, IN numoffset INT)
+CREATE PROCEDURE SearchByGeneral(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN return INT, IN pagesize INT, IN numoffset INT)
 BEGIN
-WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%',keyword,'%')) AND T.adult = adult AND T.runtime <= runtime)
+WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adult AND T.runtime <= runtime)
 
 CASE
 WHEN return = 1 THEN (SELECT movie_id, title, tagline, genre FROM mFilter ORDER BY title ASC LIMIT pagesize OFFSET numoffset);
@@ -33,33 +34,33 @@ END; //
 
 
 DELIMITER //
-CREATE PROCEDURE SearchByGeneralDetail(IN keyword VARCHAR(50), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
+CREATE PROCEDURE SearchByGeneralDetail(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
 BEGIN
-WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%',keyword,'%')) AND T.adult = adult AND T.runtime <= runtime)
+WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adult AND T.runtime <= runtime)
 SELECT movie_id, title, tagline, genre FROM mFilter ORDER BY title ASC LIMIT pagesize OFFSET numoffset;
 END; //
 
 
 DELIMITER //
-CREATE PROCEDURE SearchByGeneralEcon(IN keyword VARCHAR(50), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
+CREATE PROCEDURE SearchByGeneralEcon(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
 BEGIN
-WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%',keyword,'%')) AND T.adult = adult AND T.runtime <= runtime)
+WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adult AND T.runtime <= runtime)
 SELECT F.movie_id, F.title, E.budget, E.revenue FROM mFilter AS F, mEcoBen AS E WHERE F.movie_id = E.movie_id ORDER BY title ASC LIMIT pagesize OFFSET numoffset;
 END; //
 
 
 DELIMITER //
-CREATE PROCEDURE SearchByGeneralEcon(IN keyword VARCHAR(50), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
+CREATE PROCEDURE SearchByGeneralEcon(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
 BEGIN
-WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%',keyword,'%')) AND T.adult = adult AND T.runtime <= runtime)
+WITH mFilter (SELECT * FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adult AND T.runtime <= runtime)
 SELECT F.movie_id, F.title, R.popularity, R.vote_average FROM  mFilter AS F, mRating AS R WHERE F.movie_id = R.movie_id ORDER BY title ASC LIMIT pagesize OFFSET numoffset;
 END; //
 
 
 DELIMITER //
-CREATE PROCEDURE SearchByGeneralCount(IN keyword VARCHAR(50), IN adlt VARCHAR(5), IN runtime INT, IN return INT)
+CREATE PROCEDURE SearchByGeneralCount(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT)
 BEGIN
-SELECT COUNT(*) FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE 'CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%',keyword,'%')) AND T.adult = adlt AND T.runtime <= runtime;
+SELECT COUNT(*) FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adlt AND T.runtime <= runtime;
 END; //
 
 

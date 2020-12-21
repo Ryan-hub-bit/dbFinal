@@ -23,10 +23,10 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
   $servername = "127.0.0.1";
   $username = "root";
   $password = "rootroot";
-
+  $db  = "db";
 
   // Create connection
-  $conn = mysqli_connect($servername, $username, $password);
+  $conn = mysqli_connect($servername, $username, $password,$db);
 
   // Check connection
   if (!$conn) {
@@ -38,7 +38,7 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
   if (isset($_POST['delete'])) {
     $movie_id = $_POST['delete'];
     // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
-    $sql1 = sprintf("DELETE FROM db.watchedMovies where user_id = %d and watched_movie_id = %d;", $user_id, $movie_id);
+    $sql1 = sprintf("DELETE FROM watchedMovies where user_id = %d and watched_movie_id = %d;", $user_id, $movie_id);
     if ($conn->query($sql1) === TRUE) {
       echo "" . $movie_id . "successfully";
     } else {
@@ -64,8 +64,8 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
   }
   $offset = $pagesize * ($page - 1);
 
-  $sql = sprintf("SELECT db.mDetail.movie_id, db.mDetail.title, db.mDetail.tagline FROM db.watchedMovies,db.mDetail WHERE db.mDetail.movie_id = db.watchedMovies.watched_movie_id AND db.watchedMovies.user_id =%d order by db.watchedMovies.watched_movie_id desc limit %d offset %d;",$user_id,$pagesize, $offset);
-  $rs = $conn->query($sql) or die("Error: ".mysqli_error($conn));;
+  $sql = sprintf("SELECT mDetail.movie_id, mDetail.title, mDetail.tagline FROM watchedMovies,mDetail WHERE db.mDetail.movie_id = db.watchedMovies.watched_movie_id AND db.watchedMovies.user_id =%d order by db.watchedMovies.watched_movie_id desc limit %d offset %d;",$user_id,$pagesize, $offset);
+  $rs = $conn->query($sql) or die("Error: ".mysqli_error($conn));
   // $rs = $conn->query($sql);
   if ($myrow = $rs->fetch_array(MYSQLI_ASSOC)) {
     $i = 0;
@@ -132,8 +132,8 @@ echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
     echo "<a href ='favorite.php?page=" . $last . "'> Last</a>";
     echo "&nbsp;";
   }
-  echo "<button id='back'>Back</button><br>";
-  echo "<button id='logout'>logout</button>";
+  echo "<br><button id = 'back' class = 'button'>Back</button>";
+  echo "<button id = 'logout' class= 'button'>logout</button>";
   echo "</div>";
   $conn->close();
   ?>
