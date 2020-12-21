@@ -1,0 +1,85 @@
+
+DROP PROCEDURE SearchByTitle;
+DROP PROCEDURE SearchByID;
+DROP PROCEDURE SearchByKeyword;
+DROP PROCEDURE AddFavorite;
+DROP PROCEDURE RmvFavorite;
+DROP PROCEDURE Recommend;
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByTitle(IN input VARCHAR(20), IN pagesize INT, IN numoffset INT)
+BEGIN
+SELECT movie_id, title, tagline, genre FROM mDetail WHERE title LIKE CONCAT('%',input,'%') ORDER BY title ASC LIMIT pagesize OFFSET numoffset;
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByID(IN input INT)
+BEGIN
+SELECT movie_id, title, tagline, genre FROM mDetail WHERE movie_id = input;
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByGeneral(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN return INT, IN pagesize INT, IN numoffset INT)
+BEGIN
+WITH mFilter AS (SELECT D.movie_id, D.title FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adlt AND T.runtime <= runtime)
+
+CASE
+WHEN return = 1 THEN (SELECT movie_id, title, tagline, genre FROM mFilter ORDER BY title ASC LIMIT pagesize OFFSET numoffset);
+WHEN return = 2 THEN (SELECT F.movie_id, F.title, E.budget, E.revenue FROM mFilter AS F, mEcoBen AS E WHERE F.movie_id = E.movie_id ORDER BY title ASC LIMIT pagesize OFFSET numoffset);
+WHEN return = 3 THEN (SELECT F.movie_id, F.title, R.popularity, R.vote_average FROM  mFilter AS F, mRating AS R WHERE F.movie_id = R.movie_id ORDER BY title ASC LIMIT pagesize OFFSET numoffset);
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByGeneralDetail(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
+BEGIN
+SELECT D.movie_id, D.title, D.tagline, D.genre FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adlt AND T.runtime <= runtime ORDER BY title ASC LIMIT pagesize OFFSET numoffset;
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByGeneralEcon(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
+BEGIN
+WITH mFilter AS (SELECT D.movie_id, D.title FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adlt AND T.runtime <= runtime)
+SELECT F.movie_id, F.title, E.budget, E.revenue FROM mFilter AS F, mEcoBen AS E WHERE F.movie_id = E.movie_id ORDER BY title ASC LIMIT pagesize OFFSET numoffset;
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByGeneralRating(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
+BEGIN
+WITH mFilter AS (SELECT D.movie_id, D.title FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adlt AND T.runtime <= runtime)
+SELECT F.movie_id, F.title, R.popularity, R.vote_average FROM  mFilter AS F, mRating AS R WHERE F.movie_id = R.movie_id ORDER BY title ASC LIMIT pagesize OFFSET numoffset;
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE SearchByGeneralCount(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT)
+BEGIN
+SELECT COUNT(*) FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHERE (D.title LIKE CONCAT('%',keyword,'%') OR D.tagline LIKE CONCAT('%',keyword,'%') OR D.genre LIKE CONCAT('%', mgenre,'%')) AND T.adult = adlt AND T.runtime <= runtime;
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE AddFavorite(IN userID INT, IN movieID INT)
+BEGIN
+INSERT INTO watchedMovies(user_id,watched_movie_id) VALUES(userID, movieID);
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE RmvFavorite(IN userID INT, IN movieID INT)
+BEGIN
+DELETE FROM watchedMovies WHERE user_id = userID AND movie_id = movieID;
+END; //
+
+
+DELIMITER //
+CREATE PROCEDURE Recommend()
+BEGIN
+SELECT D.movie_id, D.title, D.genre, D.tagline, R.scores FROM mDetail AS D JOIN recommendation AS R ON R.movie_id = D.movie_id ORDER BY R.scores DESC;
+DELETE FROM recommendation;
+END; //
