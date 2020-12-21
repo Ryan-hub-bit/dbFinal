@@ -1,7 +1,7 @@
 <?php
 include "session.php";
 session_start();
-echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
+// echo "Your user id is: " . $_SESSION['user_id'] . "<br>";
 // $_SESSION['movie_id'] = $_POST['movie_id'];
 //  echo "Your movie id is: ".$_SESSION['movie_id']."<br>";
 $_SESSION['flag'] = $_POST['flag'];
@@ -9,7 +9,7 @@ if ($_SESSION['flag'] === 'false') {
   $_SESSION['keyword'] = $_POST['keyword'];
 }
 
-echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
+// echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
 ?>
 
 <head>
@@ -46,8 +46,8 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
     $movie_id = $_POST['add'];
 
     // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
-    $sql1 = sprintf("INSERT INTO watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);", $user_id, $movie_id);
-    if ($conn->query($sql1) === TRUE) {
+    // $sql1 = sprintf("INSERT INTO watchedMovies(user_id,watched_movie_id) VALUES(%d, %d);", $user_id, $movie_id);
+    if ($conn->query("Call AddFavorite('".$user_id."',$movie_id)") === True) {
       echo "<h1>Add   " . $movie_id . "    successfully</h1>";
     } else {
       // echo "Error: " . $sql . "<br>" . $conn->error;
@@ -149,8 +149,8 @@ echo "Your keyword is: " . $_SESSION['keyword'] . "<br>";
             echo "<a href ='SearchByTitlePagesCpy.php?page=" . $last . "'> Last</a>";
             echo "&nbsp;";
           }
-          echo "<button id='back'>Back</button><br>";
-          echo "<button id='logout'>logout</button>";
+          echo "<br><button id = 'back' class = 'button'>Back</button>";
+          echo "<button id = 'logout' class= 'button'>logout</button>";
           echo "</div>";
           $conn->close();
           ?>

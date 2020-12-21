@@ -11,7 +11,7 @@
 <div class="container">
 
   <header>
-    <h2><a href="#">UMovies</a></h2>
+    <h2><a href="#">Yarowsky's Movies</a></h2>
    
   </header>
 

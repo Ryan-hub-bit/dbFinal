@@ -14,6 +14,7 @@
   
 body {
     box-sizing: border-box;
+    background-image:url("../images/background.jpg");
     font-family: 'Lato', sans-serif;
     margin: 0;
     padding: 0;
@@ -64,6 +65,7 @@ body {
     padding: 20px;
     z-index: 1;
     position: absolute;
+    
   }
   
 .main-menu {
@@ -165,10 +167,12 @@ background-color:#14191d;
 }
 
 article {
-   background: var(--gray-color);
+   margin-top:5.3em;   
+   background-color:#14191d; 
    padding: 1em;
-   border-radius: 0 0 5px 5px;
-   box-shadow: 5px 5px 5px #CCC;
+   /* border-radius: 0 0 5px 5px; */
+   /* box-shadow: 5px 5px 5px #CCC; */
+   color:var(--white-color);
    position: relative;
    z-index: -1;
 }
@@ -178,9 +182,9 @@ h1 {
     font-size: 1.5rem;
     margin: 1em 2em;
     padding: 0;
-    left:20%;
+    /* left:2%; */
     position: relative;
-    color: #777;
+    color:var(--white-color);
 }
 
 .content {

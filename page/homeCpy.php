@@ -11,20 +11,20 @@ $_SESSION['flag'] = $_POST['flag'];
 if ($_SESSION['flag'] === 'false') {
     $_SESSION['keyword'] = $_POST['keyword'];
     $_SESSION['drop2'] = $_POST['drop2'];
-    $_SESSION['drop1'] = $_POST['drop1'];// genre
+    $_SESSION['drop1'] = $_POST['drop1']; // genre
     $_SESSION['adult'] = $_POST['adult'];
     $_SESSION['runtime'] = $_POST['runtime'];
 }
-if(strcmp($_SESSION['adult'],"on") == 0) {
+if (strcmp($_SESSION['adult'], "on") == 0) {
     $_SESSION['adult'] = TRUE;
-}else {
-    $_SESSION['adult'] = FALSE; 
+} else {
+    $_SESSION['adult'] = FALSE;
 }
-echo "flag:".$_SESSION['flag'];
-echo "checkBox:".$_SESSION['adult'];
-// echo "keyword" . $_SESSION['keyword'];
-// echo "drop2" . $_SESSION['drop2'];
-echo "Welcome to Umovie, User " . $_SESSION['user_id'];
+// echo "flag:".$_SESSION['flag'];
+// echo "checkBox:".$_SESSION['adult'];
+// // echo "keyword" . $_SESSION['keyword'];
+// // echo "drop2" . $_SESSION['drop2'];
+echo "Welcome to Yarowsky's Movies, User " . $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -46,14 +46,14 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
     <?php
     $user_id = $_SESSION['user_id'];
     $keyword = $_SESSION['keyword'];
-    $gener = $_SESSION['drop1'];
+    $genre = $_SESSION['drop1'];
     if (isset($_POST['drop2'])) {
-        $info= $_POST['drop2'];
-        if(strcmp($info,"Economy") == 0) {
+        $info = $_POST['drop2'];
+        if (strcmp($info, "Economy") == 0) {
             echo '<Script language="JavaScript">location.href="economyGeneralSearchCpy.php?page=1"</script>';
-        }else if(strcmp($info,"Detail") == 0) {
+        } else if (strcmp($info, "Detail") == 0) {
             echo '<Script language="JavaScript">location.href="detailGeneralSearchCpy.php?page=1"</script>';
-        }else if(strcmp($info,"Rating") == 0) {
+        } else if (strcmp($info, "Rating") == 0) {
             echo '<Script language="JavaScript">location.href="ratingGeneralSearchCpy.php?page=1"</script>';
         }
         // $sql1 = "INSERT INTO db.watchedMovies(user_id,watched_movie_id) "
@@ -68,6 +68,13 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
     }
     $_SESSION['flag'] = true;
     ?>
+    <?php
+
+    $command = escapeshellcmd('python3 test.py');
+    $output = shell_exec($command);
+    echo $output;
+
+    ?>
     <div id="d1" class="container">
         <nav class="menu">
             <ul class="main-menu">
@@ -80,10 +87,17 @@ echo "Welcome to Umovie, User " . $_SESSION['user_id'];
                         <li id="generalSearch">GeneralSearch</li>
                     </ul>
                 </li>
-                <li id="fList"></i>Favorite List</li>
-                <li>Recommendation</li>
+                <li id="fList">Favorite List</li>
+                <li id="RList">Recommendation</li>
             </ul>
         </nav>
+        <article>
+            <h1>Welcome to Yarowsky’s Movies!</h1><br>
+            <p style="text-align:center">Here, you can search up movies, add them to your watched list, and get movie recommendations from our magic* movie recommendation algorithm!
+
+                <br><br>
+                *magic not included</p>
+        </article>
     </div>
 
 </body>
@@ -98,6 +112,7 @@ echo $output;
 <script type="text/javascript">
     document.getElementById("movieID").onclick = function() {
         var element = document.getElementById("d1");
+        element.removeChild(element.lastChild);
         element.removeChild(element.lastChild);
         var head = document.createElement("h1");
         var node = document.createTextNode("ENTER MOVIE ID");
@@ -149,7 +164,7 @@ echo $output;
     document.getElementById("movieTitle").onclick = function() {
         var element = document.getElementById("d1");
         element.removeChild(element.lastChild);
-        // element.removeChild(element.lastChild);
+        element.removeChild(element.lastChild);
         var head = document.createElement("h1");
         var node = document.createTextNode("ENTER MOVIE TITLE");
         head.appendChild(node);
@@ -178,6 +193,7 @@ echo $output;
         flag.setAttribute('type', "hidden");
         flag.setAttribute('value', "false");
         flag.setAttribute('name', "flag");
+        flag.setAttribute('id', "flag")
 
 
         var s = document.createElement("input");
@@ -209,11 +225,11 @@ echo $output;
 
         var element = document.getElementById("d1");
         element.removeChild(element.lastChild);
-
+        // element.removeChild(element.lastChild);
         var f = document.createElement("form");
         f.setAttribute('id', "f3");
         f.setAttribute('method', "post");
-        f.setAttribute('action',"homeCpy.php");
+        f.setAttribute('action', "homeCpy.php");
         // var info = document.getElementById("drop2").val();
         // var str;
         // if (document.getElementById('drop2') != null) {
@@ -337,7 +353,7 @@ echo $output;
         div4.appendChild(label);
 
         var l2 = document.createElement("label");
-        l2.setAttribute('for', "runTime");
+        l2.setAttribute('for', "runtime");
         l2.setAttribute('value', "search BY mid");
         l2.innerHTML = "Runtime(upper limit):";
 
@@ -371,28 +387,28 @@ echo $output;
         var l4 = document.createElement("label");
         l4.setAttribute('for', "runTime");
         l4.setAttribute('value', "runTime");
-        l4.textContent = "Please select the information you want to see:"; 
+        l4.textContent = "Please select the information you want to see:";
 
         var drop = document.createElement("input");
-        drop.setAttribute('type',"text");
+        drop.setAttribute('type', "text");
         drop.setAttribute('list', "info");
         drop.setAttribute('name', "drop2");
         drop.setAttribute('id', "drop2");
 
         var datalist2 = document.createElement("datalist");
-        datalist2.setAttribute('id',"info");
+        datalist2.setAttribute('id', "info");
 
         var option5 = document.createElement("option");
-        option5.setAttribute('value',"Economy")
+        option5.setAttribute('value', "Economy")
 
         var option6 = document.createElement("option");
-        option6.setAttribute('value',"Detail")
+        option6.setAttribute('value', "Detail")
 
         // var option7 = document.createElement("option");
         // option7.setAttribute('value',"Type")
 
         var option8 = document.createElement("option");
-        option8.setAttribute('value',"Rating")
+        option8.setAttribute('value', "Rating")
 
 
         datalist2.appendChild(option5);
@@ -401,11 +417,11 @@ echo $output;
         datalist2.appendChild(option8);
 
         var div6 = document.createElement("div");
-         div6.className = "row";
-         div6.appendChild(l4);
-         div6.appendChild(drop);        
-         div6.appendChild(datalist2);        
-           
+        div6.className = "row";
+        div6.appendChild(l4);
+        div6.appendChild(drop);
+        div6.appendChild(datalist2);
+
 
 
 
@@ -451,6 +467,10 @@ echo $output;
     document.getElementById("fList").onclick = function() {
         // alert("okay");
         location.href = "favorite.php?page=1";
+    };
+    document.getElementById("RList").onclick = function() {
+        // alert("okay");
+        location.href = "recommendations.php";
     };
 </script>
 
