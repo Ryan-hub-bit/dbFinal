@@ -80,6 +80,6 @@ END; //
 DELIMITER //
 CREATE PROCEDURE Recommend()
 BEGIN
-SELECT D.movie_id, D.title, D.genre, D.tagline, R.scores FROM mDetail AS D JOIN recommendation AS R ON R.movie_id = D.movie_id;
+SELECT D.movie_id, D.title, D.genre, D.tagline, R.scores FROM mDetail AS D JOIN recommendation AS R ON R.movie_id = D.movie_id ORDER BY R.scores DESC;
 DELETE FROM recommendation;
 END; //
