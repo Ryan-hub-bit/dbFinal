@@ -1,4 +1,3 @@
-
 DROP PROCEDURE SearchByTitle;
 DROP PROCEDURE SearchByID;
 DROP PROCEDURE SearchByKeyword;
@@ -7,6 +6,7 @@ DROP PROCEDURE RmvFavorite;
 DROP PROCEDURE Recommend;
 
 
+/*query to return movies by title*/
 DELIMITER //
 CREATE PROCEDURE SearchByTitle(IN input VARCHAR(20), IN pagesize INT, IN numoffset INT)
 BEGIN
@@ -14,6 +14,7 @@ SELECT movie_id, title, tagline, genre FROM mDetail WHERE title LIKE CONCAT('%',
 END; //
 
 
+/*query to return movies by id*/
 DELIMITER //
 CREATE PROCEDURE SearchByID(IN input INT)
 BEGIN
@@ -21,6 +22,7 @@ SELECT movie_id, title, tagline, genre FROM mDetail WHERE movie_id = input;
 END; //
 
 
+/*old version of the below three queries*/
 DELIMITER //
 CREATE PROCEDURE SearchByGeneral(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN return INT, IN pagesize INT, IN numoffset INT)
 BEGIN
@@ -33,6 +35,7 @@ WHEN return = 3 THEN (SELECT F.movie_id, F.title, R.popularity, R.vote_average F
 END; //
 
 
+/*query to return movie details (tagline, genre) given keyword, genre, adult rating and runtime*/
 DELIMITER //
 CREATE PROCEDURE SearchByGeneralDetail(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
 BEGIN
@@ -40,6 +43,7 @@ SELECT D.movie_id, D.title, D.tagline, D.genre FROM mDetail AS D JOIN mType AS T
 END; //
 
 
+/*query to return movie economic details (revenue, budget) given keyword, genre, adult rating and runtime*/
 DELIMITER //
 CREATE PROCEDURE SearchByGeneralEcon(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
 BEGIN
@@ -48,6 +52,7 @@ SELECT F.movie_id, F.title, E.budget, E.revenue FROM mFilter AS F, mEcoBen AS E 
 END; //
 
 
+/*query to return movie rating details (popularity, voter average) given keyword, genre, adult rating and runtime*/
 DELIMITER //
 CREATE PROCEDURE SearchByGeneralRating(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT, IN pagesize INT, IN numoffset INT)
 BEGIN
@@ -56,6 +61,7 @@ SELECT F.movie_id, F.title, R.popularity, R.vote_average FROM  mFilter AS F, mRa
 END; //
 
 
+/*query to return number of results to help divide up the result pages*/
 DELIMITER //
 CREATE PROCEDURE SearchByGeneralCount(IN keyword VARCHAR(50), IN mgenre VARCHAR(20), IN adlt VARCHAR(5), IN runtime INT)
 BEGIN
@@ -63,6 +69,7 @@ SELECT COUNT(*) FROM mDetail AS D JOIN mType AS T ON D.movie_id = T.movie_id WHE
 END; //
 
 
+/*query to add movie to user favorite list*/
 DELIMITER //
 CREATE PROCEDURE AddFavorite(IN userID INT, IN movieID INT)
 BEGIN
@@ -70,13 +77,14 @@ INSERT INTO watchedMovies(user_id,watched_movie_id) VALUES(userID, movieID);
 END; //
 
 
+/*query to remove movie from user favorite list*/
 DELIMITER //
 CREATE PROCEDURE RmvFavorite(IN userID INT, IN movieID INT)
 BEGIN
 DELETE FROM watchedMovies WHERE user_id = userID AND movie_id = movieID;
 END; //
 
-
+/*query to get the recommended movies from the recommendation table*/
 DELIMITER //
 CREATE PROCEDURE Recommend()
 BEGIN
